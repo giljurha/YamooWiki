@@ -1,26 +1,23 @@
-package com.test.yamoowikiproject.ui.home
+package com.test.yamoowikiproject.ui.user
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.test.yamoowikiproject.MainActivity
 import com.test.yamoowikiproject.R
-
-
-class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-
+class SignUpFragment : Fragment() {
+    lateinit var mainActivity:MainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_home, container, false)
+
+        mainActivity = activity as MainActivity
+
+        return inflater.inflate(R.layout.fragment_signup, container, false)
     }
-
-
 }

@@ -1,23 +1,24 @@
-package com.test.yamoowikiproject.ui.user
+package com.test.yamoowikiproject.ui.myinfo
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.test.yamoowikiproject.MainActivity
 import com.test.yamoowikiproject.R
-class SignupFragment : Fragment() {
-    lateinit var mainActivity:MainActivity
+
+
+class MyInfoFragment : Fragment() {
+    // TODO: Rename and change types of parameters
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
-        mainActivity = activity as MainActivity
-
-        return inflater.inflate(R.layout.fragment_signup, container, false)
+        return inflater.inflate(R.layout.fragment_myinfo, container, false)
     }
+
+
 }
