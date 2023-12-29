@@ -1,15 +1,17 @@
 package com.test.yamoowikiproject.ui.home
 
-import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.test.yamoowikiproject.R
+import androidx.fragment.app.Fragment
+import com.test.yamoowikiproject.MainActivity
+import com.test.yamoowikiproject.databinding.FragmentHomeBinding
 
 
 class HomeFragment : Fragment() {
+    lateinit var mainActivity: MainActivity
+    lateinit var fragmentHomeBinding: FragmentHomeBinding
     // TODO: Rename and change types of parameters
 
 
@@ -17,10 +19,13 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        fragmentHomeBinding = FragmentHomeBinding.inflate(layoutInflater)
+        mainActivity = activity as MainActivity
+
+        mainActivity.activityMainbinding.bottomNavigationView.visibility = View.VISIBLE
+
+        return fragmentHomeBinding.root
     }
 
-
+    //TODO: 뒤로가기 눌렀을 경우 앱 종료 될 수 있도록 설정해야함.
 }

@@ -1,29 +1,40 @@
 package com.test.yamoowikiproject.ui.user
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.test.yamoowikiproject.MainActivity
-import com.test.yamoowikiproject.R
-import kotlin.concurrent.fixedRateTimer
-
+import com.test.yamoowikiproject.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
-    lateinit var mainActivity:MainActivity
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    lateinit var fragmentLoginBinding: FragmentLoginBinding
+    lateinit var mainActivity: MainActivity
 
-
-
-        return inflater.inflate(R.layout.fragment_login, container, false)
-
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        mainActivity = activity as MainActivity
+        mainActivity.activityMainbinding.bottomNavigationView.visibility = View.GONE
+        super.onCreate(savedInstanceState)
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
+        // Inflate the layout for this fragment
+        fragmentLoginBinding = FragmentLoginBinding.inflate(layoutInflater)
+        mainActivity.activityMainbinding.bottomNavigationView.visibility = View.GONE
 
+
+        fragmentLoginBinding.run {
+            signInText.setOnClickListener {
+                mainActivity.replaceFragment(MainActivity.SINGUP_FRAGMENT, true, false, null)
+            }
+            loginButton.setOnClickListener {
+                mainActivity.replaceFragment(MainActivity.HOME_FRAGMENT, true, false, null)
+            }
+        }
+        return fragmentLoginBinding.root
+    }
 }

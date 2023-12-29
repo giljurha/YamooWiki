@@ -3,20 +3,20 @@ package com.test.yamoowikiproject
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.test.yamoowikiproject.databinding.ActivityMainBinding
 import com.test.yamoowikiproject.ui.home.HomeFragment
 import com.test.yamoowikiproject.ui.myinfo.MyInfoFragment
 import com.test.yamoowikiproject.ui.search.SearchFragment
 import com.test.yamoowikiproject.ui.user.LoginFragment
 import com.test.yamoowikiproject.ui.user.ProfileFragment
-import com.test.yamoowikiproject.ui.user.SignUpFragment
+import com.test.yamoowikiproject.ui.user.SignupFragment
+
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var activityMainbinding: ActivityMainBinding
 
-    companion object{
+    companion object {
         val LOGIN_FRAGMENT = "LoginFragment"
         val SINGUP_FRAGMENT = "SignUpFragment"
         val PROFILE_FRAGMENT = "ProfileFragment"
@@ -32,26 +32,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(activityMainbinding.root)
 
 //        if( preference 체크값 false ) replaceFragment 호출 후 btmNaviView visibility View.Gone
+        replaceFragment(LOGIN_FRAGMENT, false, false, null)
+//        activityMainbinding.bottomNavigationView.visibility = View.GONE
 
         activityMainbinding.run {
             bottomNavigationView.setOnItemSelectedListener {
                 when (it.itemId) {
-                    R.id.home -> replaceFragment(HOME_FRAGMENT,false,false,null)
-                    R.id.search -> replaceFragment(SEARCH_FRAGMENT,false,false,null)
-                    R.id.myInfo -> replaceFragment(MYINFO_FRAGMENT,false,false,null)
+                    R.id.home -> replaceFragment(HOME_FRAGMENT, false, false, null)
+                    R.id.search -> replaceFragment(SEARCH_FRAGMENT, false, false, null)
+                    R.id.myInfo -> replaceFragment(MYINFO_FRAGMENT, false, false, null)
                 }
                 false
             }
         }
     }
 
-    fun replaceFragment(name: String, addToBackStack: Boolean, animate: Boolean, bundle: Bundle?){
+    fun replaceFragment(name: String, addToBackStack: Boolean, animate: Boolean, bundle: Bundle?) {
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
 
-        var newFragment = when(name){
+        var newFragment = when (name) {
             LOGIN_FRAGMENT -> LoginFragment()
-            SINGUP_FRAGMENT -> SignUpFragment()
+            SINGUP_FRAGMENT -> SignupFragment()
             PROFILE_FRAGMENT -> ProfileFragment()
             HOME_FRAGMENT -> HomeFragment()
             SEARCH_FRAGMENT -> SearchFragment()
