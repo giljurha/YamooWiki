@@ -19,33 +19,34 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
         app:layout_constraintEnd_toStartOf="@id/textStartedPost"
+        app:layout_constraintBottom_toTopOf="@id/latestPost"
         android:layout_marginTop="20dp"
-        tools:src="@tools:sample/avatars" />
+        android:src="@drawable/baseline_person_outline_24" />
 
     <TextView
         android:id="@+id/textStartedPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:text="시작한 글 100"
+        app:layout_constraintBottom_toTopOf="@id/textFollower"
+        app:layout_constraintEnd_toStartOf="@id/textEditedPost"
         app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
-        app:layout_constraintEnd_toStartOf="@id/textEditedPost"/>
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/textEditedPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="수정한 글 100"
+        app:layout_constraintBottom_toBottomOf="@+id/textStartedPost"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/textStartedPost"
-        app:layout_constraintTop_toTopOf="@id/textStartedPost"
-         />
+        app:layout_constraintTop_toTopOf="@id/textStartedPost" />
 
     <TextView
         android:id="@+id/textFollower"
@@ -53,8 +54,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="팔로워 100"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toStartOf="@id/textFollowing"
-        app:layout_constraintStart_toEndOf="@id/imageView"
+        app:layout_constraintStart_toStartOf="@id/textStartedPost"
         app:layout_constraintTop_toBottomOf="@+id/textStartedPost" />
 
     <TextView
@@ -62,27 +64,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="팔로잉 100"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/textFollower"
+        app:layout_constraintEnd_toEndOf="@+id/textEditedPost"
         app:layout_constraintStart_toEndOf="@id/textFollower"
-        app:layout_constraintTop_toTopOf="@id/textFollower"
-         />
+        app:layout_constraintTop_toTopOf="@id/textFollower" />
 
     <TextView
         android:id="@+id/latestPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="최근 작성 글"
         android:textSize="20sp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageView"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@id/recyclerView"
+        app:layout_constraintHorizontal_bias="0.05"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/latestPost"
-        android:layout_marginTop="10dp"/>
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

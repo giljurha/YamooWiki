@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.test.yamoowikiproject.MainActivity
-import com.test.yamoowikiproject.R
 import com.test.yamoowikiproject.databinding.FragmentSignupBinding
 
 class SignupFragment : Fragment() {

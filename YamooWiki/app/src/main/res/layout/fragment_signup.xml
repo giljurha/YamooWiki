@@ -1,137 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.user.SignupFragment">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/materialToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/idInput"
-        android:layout_width="250dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="100dp"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
         android:ems="10"
         android:hint="아이디"
         android:inputType="text"
         android:maxLength="30"
-        android:layout_marginLeft="25dp"/>
-
-    <EditText
-        android:id="@+id/nickNameInput"
-        android:layout_width="250dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="닉네임"
-        android:inputType="text"
-        android:maxLength="30"
-        android:layout_alignStart="@id/idInput"
-        android:layout_below="@id/idInput"
-        />
-
-    <EditText
-        android:id="@+id/pwInput"
-        android:layout_width="250dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="비밀번호"
-        android:inputType="text"
-        android:layout_alignStart="@id/idInput"
-        android:layout_below="@id/nickNameInput"
-        />
-
-    <EditText
-        android:id="@+id/pwChkInput"
-        android:layout_width="250dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="비밀번호 재입력"
-        android:inputType="text"
-        android:layout_alignStart="@id/idInput"
-        android:layout_below="@id/pwInput"
-        />
-
-    <EditText
-        android:id="@+id/phoneInput"
-        android:layout_width="250dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="핸드폰번호"
-        android:inputType="text"
-        android:layout_alignStart="@id/idInput"
-        android:layout_below="@id/pwChkInput"
-        />
-
-    <EditText
-        android:id="@+id/phoneChkInput"
-        android:layout_width="250dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="인증번호"
-        android:inputType="text"
-        android:layout_alignStart="@id/idInput"
-        android:layout_below="@id/phoneInput"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/nickNameInput"
+        app:layout_constraintEnd_toStartOf="@id/idChkBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/materialToolbar"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <Button
         android:id="@+id/idChkBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_toRightOf="@id/idInput"
-        android:layout_alignTop="@id/idInput"
-        android:layout_marginLeft="15dp"
-        android:text="중복확인"
         android:backgroundTint="@color/blue"
-        />
+        android:text="중복확인"
+        app:layout_constraintBaseline_toBaselineOf="@+id/idInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/idInput" />
+
+    <EditText
+        android:id="@+id/nickNameInput"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:ems="10"
+        android:hint="닉네임"
+        android:inputType="text"
+        android:maxLength="30"
+        app:layout_constraintBottom_toTopOf="@+id/pwInput"
+        app:layout_constraintEnd_toStartOf="@id/nickNameChkBtn"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idInput" />
 
     <Button
         android:id="@+id/nickNameChkBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/idInput"
-        android:layout_alignTop="@id/nickNameInput"
-        android:layout_marginLeft="15dp"
-        android:text="중복확인"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:backgroundTint="@color/blue"
-        />
+        android:text="중복확인"
+        app:layout_constraintBaseline_toBaselineOf="@+id/nickNameInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/nickNameInput" />
+
+    <EditText
+        android:id="@+id/pwInput"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="10dp"
+        android:ems="10"
+        android:hint="비밀번호"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/pwChkInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nickNameInput" />
+
+    <EditText
+        android:id="@+id/pwChkInput"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="10dp"
+        android:ems="10"
+        android:hint="비밀번호 재입력"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/phoneInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pwInput" />
+
+    <EditText
+        android:id="@+id/phoneInput"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:ems="10"
+        android:hint="핸드폰번호"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/phoneChkInput"
+        app:layout_constraintEnd_toStartOf="@+id/phoneBtn"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pwChkInput" />
 
     <Button
         android:id="@+id/phoneBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/idInput"
-        android:layout_alignTop="@id/phoneInput"
-        android:layout_marginLeft="15dp"
-        android:text="인증"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:backgroundTint="@color/blue"
-        />
+        android:text="인증"
+        app:layout_constraintBaseline_toBaselineOf="@+id/phoneInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/phoneInput" />
+
+    <EditText
+        android:id="@+id/phoneChkInput"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:ems="10"
+        android:hint="인증번호"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/nextBtn"
+        app:layout_constraintEnd_toStartOf="@id/phoneChkBtn"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneInput" />
 
     <Button
         android:id="@+id/phoneChkBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/idInput"
-        android:layout_alignTop="@id/phoneChkInput"
-        android:layout_marginLeft="15dp"
-        android:text="확인"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:backgroundTint="@color/blue"
-        />
+        android:text="확인"
+        app:layout_constraintBaseline_toBaselineOf="@+id/phoneChkInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/phoneChkInput" />
 
     <Button
         android:id="@+id/nextBtn"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="다음"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/phoneChkInput"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/blue"
-        />
+        android:text="다음"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phoneChkInput" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

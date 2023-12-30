@@ -25,7 +25,7 @@ class ProfileFragment : Fragment() {
         // Inflate the layout for this fragment
 
         fragmentProfileBinding.run {
-            SignUpbutton.setOnClickListener {
+            signUpbutton.setOnClickListener {
                 mainActivity.replaceFragment(MainActivity.HOME_FRAGMENT, true, false, null)
 
             }
