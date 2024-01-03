@@ -26,8 +26,9 @@ class ProfileFragment : Fragment() {
 
         fragmentProfileBinding.run {
             signUpbutton.setOnClickListener {
-                mainActivity.replaceFragment(MainActivity.HOME_FRAGMENT, true, false, null)
-
+                mainActivity.removeFragment(MainActivity.SINGUP_FRAGMENT)
+                mainActivity.removeFragment(MainActivity.LOGIN_FRAGMENT)
+                mainActivity.replaceFragment(MainActivity.HOME_FRAGMENT, false, false, null)
             }
         }
 

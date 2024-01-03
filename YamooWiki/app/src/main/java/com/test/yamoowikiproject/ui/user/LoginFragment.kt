@@ -32,7 +32,7 @@ class LoginFragment : Fragment() {
                 mainActivity.replaceFragment(MainActivity.SINGUP_FRAGMENT, true, false, null)
             }
             loginButton.setOnClickListener {
-                mainActivity.replaceFragment(MainActivity.HOME_FRAGMENT, true, false, null)
+                mainActivity.replaceFragment(MainActivity.HOME_FRAGMENT, false, false, null)
             }
         }
         return fragmentLoginBinding.root

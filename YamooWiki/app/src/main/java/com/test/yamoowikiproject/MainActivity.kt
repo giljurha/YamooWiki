@@ -3,6 +3,7 @@ package com.test.yamoowikiproject
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.test.yamoowikiproject.databinding.ActivityMainBinding
 import com.test.yamoowikiproject.ui.home.HomeFragment
 import com.test.yamoowikiproject.ui.myinfo.MyInfoFragment
@@ -34,13 +35,23 @@ class MainActivity : AppCompatActivity() {
 //        if( preference 체크값 false ) replaceFragment 호출 후 btmNaviView visibility View.Gone
         replaceFragment(LOGIN_FRAGMENT, false, false, null)
 //        activityMainbinding.bottomNavigationView.visibility = View.GONE
+//        replaceFragment(HOME_FRAGMENT,false,false,null)
 
         activityMainbinding.run {
             bottomNavigationView.setOnItemSelectedListener {
                 when (it.itemId) {
-                    R.id.home -> replaceFragment(HOME_FRAGMENT, false, false, null)
-                    R.id.search -> replaceFragment(SEARCH_FRAGMENT, false, false, null)
-                    R.id.myInfo -> replaceFragment(MYINFO_FRAGMENT, false, false, null)
+                    R.id.home -> {
+                        replaceFragment(HOME_FRAGMENT, false, false, null)
+                        it.isChecked = true
+                    }
+                    R.id.search -> {
+                        replaceFragment(SEARCH_FRAGMENT, false, false, null)
+                        it.isChecked = true
+                    }
+                    R.id.myInfo -> {
+                        replaceFragment(MYINFO_FRAGMENT, false, false, null)
+                        it.isChecked = true
+                    }
                 }
                 false
             }
@@ -63,14 +74,16 @@ class MainActivity : AppCompatActivity() {
 
         newFragment.arguments = bundle
 
-        if (newFragment != null) {
+        fragmentTransaction.replace(R.id.mainContainer, newFragment)
 
-            fragmentTransaction.replace(R.id.mainContainer, newFragment)
+        if (addToBackStack == true) fragmentTransaction.addToBackStack(name)
 
-            if (addToBackStack == true) fragmentTransaction.addToBackStack(name)
+        fragmentTransaction.commit()
 
-            fragmentTransaction.commit()
-        }
+    }
+
+    fun removeFragment(name: String){
+        supportFragmentManager.popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
 }

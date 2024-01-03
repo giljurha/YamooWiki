@@ -24,10 +24,11 @@
         android:layout_height="60dp"
         app:itemIconSize="40dp"
         app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/menu_btm_navi"
-        app:layout_constraintTop_toBottomOf="@id/mainContainer"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/mainContainer"
+        app:menu="@menu/menu_btm_navi"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
