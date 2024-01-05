@@ -5,10 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.test.yamoowikiproject.MainActivity
-import com.test.yamoowikiproject.R
+import com.test.yamoowikiproject.ui.main.MainActivity
 import com.test.yamoowikiproject.databinding.FragmentProfileBinding
-import com.test.yamoowikiproject.databinding.FragmentSignupBinding
 
 
 class ProfileFragment : Fragment() {

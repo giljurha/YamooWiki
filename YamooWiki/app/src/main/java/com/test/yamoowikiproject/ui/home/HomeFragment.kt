@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.test.yamoowikiproject.MainActivity
+import com.google.firebase.Firebase
+import com.google.firebase.database.database
+
+import com.test.yamoowikiproject.ui.main.MainActivity
 import com.test.yamoowikiproject.databinding.FragmentHomeBinding
 
 
@@ -23,6 +26,9 @@ class HomeFragment : Fragment() {
         mainActivity = activity as MainActivity
 
         mainActivity.activityMainbinding.bottomNavigationView.visibility = View.VISIBLE
+        val database = Firebase.database
+        val test1 = database.getReference("test")
+        test1.setValue("Hello World")
 
         return fragmentHomeBinding.root
     }

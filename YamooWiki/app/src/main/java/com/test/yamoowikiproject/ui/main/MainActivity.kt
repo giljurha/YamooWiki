@@ -1,9 +1,13 @@
-package com.test.yamoowikiproject
+package com.test.yamoowikiproject.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.view.KeyEvent
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.test.yamoowikiproject.R
 import com.test.yamoowikiproject.databinding.ActivityMainBinding
 import com.test.yamoowikiproject.ui.home.HomeFragment
 import com.test.yamoowikiproject.ui.myinfo.MyInfoFragment
@@ -58,6 +62,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private var backPressedOnce = false
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (backPressedOnce) {
+                finish() // 앱 종료
+            } else {
+                backPressedOnce = true
+                Toast.makeText(this, "한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+
+                // 2초 안에 다시 뒤로가기 버튼을 누르지 않으면 상태 초기화
+                Handler().postDelayed({ backPressedOnce = false }, 2000)
+            }
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
     fun replaceFragment(name: String, addToBackStack: Boolean, animate: Boolean, bundle: Bundle?) {
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -87,3 +109,5 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+
+

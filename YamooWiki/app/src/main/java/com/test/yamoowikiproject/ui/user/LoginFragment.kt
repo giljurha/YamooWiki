@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.test.yamoowikiproject.MainActivity
+import com.test.yamoowikiproject.ui.main.MainActivity
 import com.test.yamoowikiproject.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
