@@ -12,11 +12,6 @@ class LoginFragment : Fragment() {
     lateinit var fragmentLoginBinding: FragmentLoginBinding
     lateinit var mainActivity: MainActivity
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        mainActivity = activity as MainActivity
-        mainActivity.activityMainbinding.bottomNavigationView.visibility = View.GONE
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,6 +19,7 @@ class LoginFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         fragmentLoginBinding = FragmentLoginBinding.inflate(layoutInflater)
+        mainActivity = activity as MainActivity
         mainActivity.activityMainbinding.bottomNavigationView.visibility = View.GONE
 
 

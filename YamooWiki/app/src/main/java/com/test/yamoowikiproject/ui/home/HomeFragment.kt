@@ -30,7 +30,10 @@ class HomeFragment : Fragment() {
         val test1 = database.getReference("test")
         test1.setValue("Hello World")
 
+
         return fragmentHomeBinding.root
+
+
     }
 
     //TODO: 뒤로가기 눌렀을 경우 앱 종료 될 수 있도록 설정해야함.

@@ -30,21 +30,22 @@ class ProfileFragment : Fragment() {
         fragmentProfileBinding = FragmentProfileBinding.inflate(layoutInflater)
         signupViewModel = ViewModelProvider(mainActivity)[SignupViewModel::class.java]
 
+//        val user: Class<User> = User::class.java
         userModel = arguments?.getParcelable("signInfo")
         Log.d("testt", "$userModel")
 
         //회원가입 결과를 받기 위한 옵저버
         signupViewModel.run{
             userModelLiveData.observe(mainActivity){
-                mainActivity.removeFragment(MainActivity.SINGUP_FRAGMENT)
-                mainActivity.removeFragment(MainActivity.LOGIN_FRAGMENT)
-                mainActivity.removeFragment(MainActivity.PROFILE_FRAGMENT)
+                mainActivity.popFragment(MainActivity.SINGUP_FRAGMENT)
+                mainActivity.popFragment(MainActivity.LOGIN_FRAGMENT)
+                mainActivity.popFragment(MainActivity.PROFILE_FRAGMENT)
                 mainActivity.replaceFragment(MainActivity.HOME_FRAGMENT, false, false, null)
             }
         }
 
         fragmentProfileBinding.run {
-            signUpbutton.setOnClickListener {
+            signupButton.setOnClickListener {
                 if (userModel == null){
                     Toast.makeText(this@ProfileFragment.context,"회원가입에 실패했습니다.",Toast.LENGTH_SHORT).show()
                 }else{

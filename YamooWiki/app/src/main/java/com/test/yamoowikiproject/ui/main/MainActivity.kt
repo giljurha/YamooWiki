@@ -36,10 +36,8 @@ class MainActivity : AppCompatActivity() {
         activityMainbinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainbinding.root)
 
-//        if( preference 체크값 false ) replaceFragment 호출 후 btmNaviView visibility View.Gone
+//        if( preference 체크값 false ) replaceFragment 호출
         replaceFragment(LOGIN_FRAGMENT, false, false, null)
-//        activityMainbinding.bottomNavigationView.visibility = View.GONE
-//        replaceFragment(HOME_FRAGMENT,false,false,null)
 
         activityMainbinding.run {
             bottomNavigationView.setOnItemSelectedListener {
@@ -62,23 +60,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-/*    private var backPressedOnce = false
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (backPressedOnce) {
-                finish() // 앱 종료
-            } else {
-                backPressedOnce = true
-                Toast.makeText(this, "한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
-
-                // 2초 안에 다시 뒤로가기 버튼을 누르지 않으면 상태 초기화
-                Handler().postDelayed({ backPressedOnce = false }, 2000)
-            }
-            return true
-        }
-        return super.onKeyDown(keyCode, event)
-    }*/
+//    if 프리퍼런스 값 트루 그렇지 않을 때는 사용하지 않음
+//    private var backPressedOnce = false
+//
+//    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            if (backPressedOnce) {
+//                finish() // 앱 종료
+//            } else {
+//                backPressedOnce = true
+//                Toast.makeText(this, "한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+//
+//                // 2초 안에 다시 뒤로가기 버튼을 누르지 않으면 상태 초기화
+//                Handler().postDelayed({ backPressedOnce = false }, 2000)
+//            }
+//            return true
+//        }
+//        return super.onKeyDown(keyCode, event)
+//    }
 
     fun replaceFragment(name: String, addToBackStack: Boolean, animate: Boolean, bundle: Bundle?) {
 
@@ -104,7 +103,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun removeFragment(name: String){
+    fun popFragment(name: String){
         supportFragmentManager.popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 

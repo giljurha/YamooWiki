@@ -94,7 +94,7 @@
             android:layout_marginTop="10dp"
             android:ems="10"
             android:hint="비밀번호"
-            android:inputType="text"
+            android:inputType="textPassword"
             app:layout_constraintBottom_toTopOf="@+id/userPwChkInput"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -108,7 +108,7 @@
             android:layout_marginTop="10dp"
             android:ems="10"
             android:hint="비밀번호 재입력"
-            android:inputType="text"
+            android:inputType="textPassword"
             app:layout_constraintBottom_toTopOf="@+id/userPhoneInput"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -123,7 +123,7 @@
             android:ems="10"
             android:hint="핸드폰번호"
             android:inputType="text"
-            app:layout_constraintBottom_toTopOf="@+id/phoneCertInput"
+            app:layout_constraintBottom_toTopOf="@+id/userPhoneCertInput"
             app:layout_constraintEnd_toStartOf="@+id/userPhoneChkBtn"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
@@ -142,7 +142,7 @@
             app:layout_constraintStart_toEndOf="@+id/userPhoneInput" />
 
         <EditText
-            android:id="@+id/phoneCertInput"
+            android:id="@+id/userPhoneCertInput"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
@@ -164,9 +164,9 @@
             android:layout_marginRight="10dp"
             android:backgroundTint="@color/blue"
             android:text="확인"
-            app:layout_constraintBaseline_toBaselineOf="@+id/phoneCertInput"
+            app:layout_constraintBaseline_toBaselineOf="@+id/userPhoneCertInput"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/phoneCertInput" />
+            app:layout_constraintStart_toEndOf="@+id/userPhoneCertInput" />
 
         <Button
             android:id="@+id/nextProfileBtn"
@@ -178,7 +178,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/phoneCertInput" />
+            app:layout_constraintTop_toBottomOf="@id/userPhoneCertInput" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
