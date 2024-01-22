@@ -123,7 +123,7 @@
             android:ems="10"
             android:hint="핸드폰번호"
             android:inputType="text"
-            app:layout_constraintBottom_toTopOf="@+id/userPhoneCertInput"
+            app:layout_constraintBottom_toTopOf="@+id/userEmailInput"
             app:layout_constraintEnd_toStartOf="@+id/userPhoneChkBtn"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
@@ -142,31 +142,31 @@
             app:layout_constraintStart_toEndOf="@+id/userPhoneInput" />
 
         <EditText
-            android:id="@+id/userPhoneCertInput"
+            android:id="@+id/userEmailInput"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="인증번호"
+            android:hint="이메일"
             android:inputType="text"
             app:layout_constraintBottom_toTopOf="@+id/nextProfileBtn"
-            app:layout_constraintEnd_toStartOf="@id/phoneCertChkBtn"
+            app:layout_constraintEnd_toStartOf="@id/userEmailChkBtn"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/userPhoneInput" />
 
         <Button
-            android:id="@+id/phoneCertChkBtn"
+            android:id="@+id/userEmailChkBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:backgroundTint="@color/blue"
-            android:text="확인"
-            app:layout_constraintBaseline_toBaselineOf="@+id/userPhoneCertInput"
+            android:text="인증"
+            app:layout_constraintBaseline_toBaselineOf="@+id/userEmailInput"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/userPhoneCertInput" />
+            app:layout_constraintStart_toEndOf="@+id/userEmailInput" />
 
         <Button
             android:id="@+id/nextProfileBtn"
@@ -178,7 +178,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/userPhoneCertInput" />
+            app:layout_constraintTop_toBottomOf="@id/userEmailInput" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

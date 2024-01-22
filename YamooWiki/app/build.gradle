@@ -16,6 +16,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // Firebase 인증
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -49,4 +52,10 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:32.7.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation("com.google.firebase:firebase-database-ktx")
+
+    //Firebase 인증
+    implementation 'com.google.firebase:firebase-bom:30.4.1'
+    implementation 'com.google.android.gms:play-services-auth:20.3.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.8'
 }

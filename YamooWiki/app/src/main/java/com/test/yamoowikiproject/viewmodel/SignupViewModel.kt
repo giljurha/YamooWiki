@@ -13,7 +13,7 @@ class SignupViewModel : ViewModel() {
     val userPw = MutableLiveData<String>()
     val userPwChk = MutableLiveData<String>()
     val userPhone = MutableLiveData<String>()
-    val userPhoneCert = MutableLiveData<String>()
+    val userEmail = MutableLiveData<String>()
 
     fun signUp(userModel: User){
         UserRepository.addUser(userModel){
