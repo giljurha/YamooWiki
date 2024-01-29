@@ -5,25 +5,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.auth.GoogleAuthProvider
+import com.test.yamoowikiproject.R
 import com.test.yamoowikiproject.databinding.FragmentSignupBinding
 import com.test.yamoowikiproject.dataclassmodel.User
-import com.test.yamoowikiproject.ui.main.MainActivity
 import com.test.yamoowikiproject.viewmodel.SignupViewModel
 
 
 class SignupFragment : Fragment() {
 
     lateinit var fragmentSignupBinding: FragmentSignupBinding
-    lateinit var mainActivity: MainActivity
+
     lateinit var signupViewModel: SignupViewModel
 
     override fun onCreateView(
@@ -32,26 +26,25 @@ class SignupFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         fragmentSignupBinding = FragmentSignupBinding.inflate(layoutInflater)
-        mainActivity = activity as MainActivity
-        signupViewModel = ViewModelProvider(mainActivity)[SignupViewModel::class.java]
+        signupViewModel = ViewModelProvider(this)[SignupViewModel::class.java]
 
         signupViewModel.run {
-            userId.observe(mainActivity) {
+            userId.observe(viewLifecycleOwner) {
                 fragmentSignupBinding.userIdInput.setText(it)
             }
-            userNickName.observe(mainActivity) {
+            userNickName.observe(viewLifecycleOwner) {
                 fragmentSignupBinding.userNickNameInput.setText(it)
             }
-            userPw.observe(mainActivity) {
+            userPw.observe(viewLifecycleOwner) {
                 fragmentSignupBinding.userPwInput.setText(it)
             }
-            userPwChk.observe(mainActivity) {
+            userPwChk.observe(viewLifecycleOwner) {
                 fragmentSignupBinding.userPwChkInput.setText(it)
             }
-            userPhone.observe(mainActivity) {
+            userPhone.observe(viewLifecycleOwner) {
                 fragmentSignupBinding.userPhoneInput.setText(it)
             }
-            userEmail.observe(mainActivity) {
+            userEmail.observe(viewLifecycleOwner) {
                 fragmentSignupBinding.userEmailInput.setText(it)
             }
         }
@@ -68,11 +61,12 @@ class SignupFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putParcelable("signInfo", userModel)
 
-                mainActivity.replaceFragment(MainActivity.PROFILE_FRAGMENT, true, false, bundle)
+               replaceFragment(ProfileFragment())
             }
         }
         return fragmentSignupBinding.root
     }
+
 
     fun chkError() {
         fragmentSignupBinding.run {
@@ -83,7 +77,7 @@ class SignupFragment : Fragment() {
             val phoneNumber = userPhoneInput.text.toString()
 
             if (pw != pwChk) {
-                val builder = MaterialAlertDialogBuilder(mainActivity)
+                val builder = MaterialAlertDialogBuilder(requireContext())
                 builder.setTitle("비밀번호 오류")
                 builder.setMessage("비밀번호가 일치하지 않습니다.")
                 builder.setPositiveButton("확인") { dialogInterface: DialogInterface, i: Int ->
@@ -95,58 +89,27 @@ class SignupFragment : Fragment() {
 
     }
 
-    fun googleLoginResult() {
-        val requestLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
-            try {
-                val account = task.getResult(ApiException::class.java)!!
-                val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-                SignupFirebaseAuth.auth.signInWithCredential(credential)
-                    .addOnCompleteListener(mainActivity) { task ->
-                        if (task.isSuccessful) {
-                            SignupFirebaseAuth.email = account.email
-
-                        } else {
-
-                        }
-                    }
-            } catch (e: ApiException) {
-
-            }
-        }
+    fun replaceFragment(fragment: Fragment){
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.mainContainer, fragment)
+        fragmentTransaction.commit()
     }
 
-//    fun googleLogin{
-//        val gso = GoogleSignInOptions
-//            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//            .requestIdToken(getString(R.string.default_web_client_id))
-//            .requestEmail()
-//            .build()
-//        val signInIntent = GoogleSignIn.getClient(mainActivity, gso).signInIntent
-//        requestLauncher.launch(signInIntent)
+//    fun replaceFragment(name: String, addToBackStack: Boolean){
+//        val fragmentTransaction = parentFragmentManager.beginTransaction()
+//
+//        val fragment = when(name){
+//            LOGIN_FRAGMENT -> LoginFragment()
+//            SIGNUP_FRAGMENT -> SignupFragment()
+//            PROFILE_FRAGMENT -> ProfileFragment()
+//            else -> Fragment()
+//        }
+//
+//        fragmentTransaction.replace(R.id.mainContainer, fragment)
+//
+//        if (addToBackStack) fragmentTransaction.addToBackStack(name)
+//        fragmentTransaction.commit()
 //    }
-
-    fun emailSignup() {
-        val email = fragmentSignupBinding.userIdInput.text.toString()
-        val password = fragmentSignupBinding.userPwInput.text.toString()
-        SignupFirebaseAuth.auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(mainActivity) { task ->
-                if(task.isSuccessful){
-                    SignupFirebaseAuth.auth.currentUser?.sendEmailVerification()
-                        ?.addOnCompleteListener { sendTask ->
-                            if(sendTask.isSuccessful){
-//                                Toast.makeText(baseContext, "회원가입에서 성공, 전송된 메일을 확인해주세요", Toast.LENGTH_SHORT).show()
-                            } else{
-//                                Toast.makeText(baseContext, "메일 발송 실패", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                } else{
-//                    Toast.makeText(baseContext, "회원가입 실패", Toast.LENGTH_SHORT).show()
-                }
-            }
-    }
 
 }
 

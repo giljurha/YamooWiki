@@ -5,8 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.firebase.Firebase
-import com.google.firebase.database.database
+
 
 import com.test.yamoowikiproject.ui.main.MainActivity
 import com.test.yamoowikiproject.databinding.FragmentHomeBinding
@@ -15,7 +14,6 @@ import com.test.yamoowikiproject.databinding.FragmentHomeBinding
 class HomeFragment : Fragment() {
     lateinit var mainActivity: MainActivity
     lateinit var fragmentHomeBinding: FragmentHomeBinding
-    // TODO: Rename and change types of parameters
 
 
     override fun onCreateView(
@@ -26,9 +24,7 @@ class HomeFragment : Fragment() {
         mainActivity = activity as MainActivity
 
         mainActivity.activityMainbinding.bottomNavigationView.visibility = View.VISIBLE
-        val database = Firebase.database
-        val test1 = database.getReference("test")
-        test1.setValue("Hello World")
+
 
 
         return fragmentHomeBinding.root

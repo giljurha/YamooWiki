@@ -2,9 +2,8 @@ package com.test.yamoowikiproject.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.view.KeyEvent
-import android.widget.Toast
+import android.view.View
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.test.yamoowikiproject.R
@@ -15,15 +14,16 @@ import com.test.yamoowikiproject.ui.search.SearchFragment
 import com.test.yamoowikiproject.ui.user.LoginFragment
 import com.test.yamoowikiproject.ui.user.ProfileFragment
 import com.test.yamoowikiproject.ui.user.SignupFragment
+import com.test.yamoowikiproject.viewmodel.MainViewModel
 
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var activityMainbinding: ActivityMainBinding
-
+    private val viewModel: MainViewModel by viewModels()
     companion object {
         val LOGIN_FRAGMENT = "LoginFragment"
-        val SINGUP_FRAGMENT = "SignUpFragment"
+        val SIGNUP_FRAGMENT = "SignUpFragment"
         val PROFILE_FRAGMENT = "ProfileFragment"
         val HOME_FRAGMENT = "HomeFragment"
         val SEARCH_FRAGMENT = "SearchFragment"
@@ -38,6 +38,12 @@ class MainActivity : AppCompatActivity() {
 
 //        if( preference 체크값 false ) replaceFragment 호출
         replaceFragment(LOGIN_FRAGMENT, false, false, null)
+
+        viewModel.isVisibleBottomNavigationView.observe(this){
+            if(it == false){
+                activityMainbinding.bottomNavigationView.visibility = View.GONE
+            }
+        }
 
         activityMainbinding.run {
             bottomNavigationView.setOnItemSelectedListener {
@@ -85,7 +91,7 @@ class MainActivity : AppCompatActivity() {
 
         var newFragment = when (name) {
             LOGIN_FRAGMENT -> LoginFragment()
-            SINGUP_FRAGMENT -> SignupFragment()
+            SIGNUP_FRAGMENT -> SignupFragment()
             PROFILE_FRAGMENT -> ProfileFragment()
             HOME_FRAGMENT -> HomeFragment()
             SEARCH_FRAGMENT -> SearchFragment()
@@ -97,7 +103,7 @@ class MainActivity : AppCompatActivity() {
 
         fragmentTransaction.replace(R.id.mainContainer, newFragment)
 
-        if (addToBackStack == true) fragmentTransaction.addToBackStack(name)
+        if (addToBackStack) fragmentTransaction.addToBackStack(name)
 
         fragmentTransaction.commit()
 

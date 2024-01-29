@@ -5,32 +5,51 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.test.yamoowikiproject.ui.main.MainActivity
+import androidx.fragment.app.activityViewModels
+import com.test.yamoowikiproject.R
 import com.test.yamoowikiproject.databinding.FragmentLoginBinding
+import com.test.yamoowikiproject.ui.home.HomeFragment
+import com.test.yamoowikiproject.viewmodel.MainViewModel
 
 class LoginFragment : Fragment() {
-    lateinit var fragmentLoginBinding: FragmentLoginBinding
-    lateinit var mainActivity: MainActivity
 
+    lateinit var fragmentLoginBinding: FragmentLoginBinding
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
-        fragmentLoginBinding = FragmentLoginBinding.inflate(layoutInflater)
-        mainActivity = activity as MainActivity
-        mainActivity.activityMainbinding.bottomNavigationView.visibility = View.GONE
+        super.onCreateView(inflater, container, savedInstanceState)
 
+        fragmentLoginBinding = FragmentLoginBinding.inflate(layoutInflater)
+        return fragmentLoginBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+//        val k = (activity as MainActivity).activityMainbinding
+
+        mainViewModel.isVisibleBottomNavigationView.value = false
 
         fragmentLoginBinding.run {
             signInText.setOnClickListener {
-                mainActivity.replaceFragment(MainActivity.SINGUP_FRAGMENT, true, false, null)
+
+                replaceFragment(SignupFragment())
+
             }
             loginButton.setOnClickListener {
-                mainActivity.replaceFragment(MainActivity.HOME_FRAGMENT, false, false, null)
+
+                replaceFragment(HomeFragment())
             }
         }
-        return fragmentLoginBinding.root
     }
+
+    fun replaceFragment(fragment: Fragment){
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.mainContainer, fragment)
+        fragmentTransaction.commit()
+    }
+
 }
