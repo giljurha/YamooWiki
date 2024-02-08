@@ -9,10 +9,11 @@ import androidx.fragment.app.activityViewModels
 import com.test.yamoowikiproject.R
 import com.test.yamoowikiproject.databinding.FragmentLoginBinding
 import com.test.yamoowikiproject.ui.home.HomeFragment
+import com.test.yamoowikiproject.ui.main.FragmentType
 import com.test.yamoowikiproject.viewmodel.MainViewModel
 
-class LoginFragment : Fragment() {
 
+class LoginFragment : Fragment() {
     lateinit var fragmentLoginBinding: FragmentLoginBinding
     private val mainViewModel: MainViewModel by activityViewModels()
 
@@ -21,35 +22,21 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-
         fragmentLoginBinding = FragmentLoginBinding.inflate(layoutInflater)
         return fragmentLoginBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        val k = (activity as MainActivity).activityMainbinding
-
         mainViewModel.isVisibleBottomNavigationView.value = false
 
         fragmentLoginBinding.run {
-            signInText.setOnClickListener {
-
-                replaceFragment(SignupFragment())
-
+            signupText.setOnClickListener {
+                mainViewModel.fragmentDestination.value = FragmentType.SIGNUP
             }
             loginButton.setOnClickListener {
-
-                replaceFragment(HomeFragment())
+                mainViewModel.fragmentDestination.value = FragmentType.LOGIN
             }
         }
     }
-
-    fun replaceFragment(fragment: Fragment){
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.mainContainer, fragment)
-        fragmentTransaction.commit()
-    }
-
 }

@@ -6,18 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.test.yamoowikiproject.R
+import com.test.yamoowikiproject.databinding.FragmentMyinfoBinding
 
 
 class MyInfoFragment : Fragment() {
-
-
+    lateinit var fragmentMyInfoBinding: FragmentMyinfoBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_myinfo, container, false)
+        fragmentMyInfoBinding = FragmentMyinfoBinding.inflate(layoutInflater)
+        return fragmentMyInfoBinding.root
     }
-
-
 }

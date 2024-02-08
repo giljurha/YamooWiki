@@ -3,13 +3,14 @@ package com.test.yamoowikiproject.dataclassmodel
 import android.os.Parcel
 import android.os.Parcelable
 
+
 data class User(
     var id: String?,
     var nickname: String?,
     var pw: String?,
     var phoneNumber: String?,
     var image: String? = null
-): Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
