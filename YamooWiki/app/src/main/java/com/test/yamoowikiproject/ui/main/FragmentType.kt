@@ -1,8 +1,9 @@
 package com.test.yamoowikiproject.ui.main
 
-enum class FragmentType {
-    LOGIN,
-    SIGNUP,
-    PROFILE,
-    HOME
+enum class FragmentType(name: String) {
+    LOGIN("Login"),
+    SIGNUP("Signup"),
+    HOME("Home"),
+    SEARCH("Search"),
+    MYINFO("MyInfo")
 }

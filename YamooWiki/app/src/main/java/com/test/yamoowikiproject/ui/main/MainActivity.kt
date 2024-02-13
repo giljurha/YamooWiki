@@ -15,7 +15,6 @@ import com.test.yamoowikiproject.ui.home.HomeFragment
 import com.test.yamoowikiproject.ui.myinfo.MyInfoFragment
 import com.test.yamoowikiproject.ui.search.SearchFragment
 import com.test.yamoowikiproject.ui.user.LoginFragment
-import com.test.yamoowikiproject.ui.user.ProfileFragment
 import com.test.yamoowikiproject.ui.user.SignupFragment
 import com.test.yamoowikiproject.viewmodel.MainViewModel
 
@@ -32,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(activityMainbinding.root)
 
         /* TODO: preference 값 체크 후 로그인 수행 */
-        replaceFragment(LOGIN_FRAGMENT, false, false, null)
+        replaceFragment(FragmentType.LOGIN, false, false, null)
 
         mainViewModel.isVisibleBottomNavigationView.observe(this) {
             if (it == false) {
@@ -43,13 +42,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainViewModel.fragmentDestination.observe(this) {
-            val fragment: String = when (it) {
-                FragmentType.SIGNUP -> SIGNUP_FRAGMENT
-                FragmentType.PROFILE -> PROFILE_FRAGMENT
-                FragmentType.LOGIN -> HOME_FRAGMENT
-                FragmentType.HOME -> HOME_FRAGMENT
-            }
-            replaceFragment(fragment, false, false, null)
+            replaceFragment(it, false, false, null)
         }
 
 
@@ -57,15 +50,15 @@ class MainActivity : AppCompatActivity() {
             bottomNavigationView.setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.home -> {
-                        replaceFragment(HOME_FRAGMENT, false, false, null)
+                        replaceFragment(FragmentType.HOME, false, false, null)
                         it.isChecked = true
                     }
                     R.id.search -> {
-                        replaceFragment(SEARCH_FRAGMENT, false, false, null)
+                        replaceFragment(FragmentType.SEARCH, false, false, null)
                         it.isChecked = true
                     }
                     R.id.myInfo -> {
-                        replaceFragment(MYINFO_FRAGMENT, false, false, null)
+                        replaceFragment(FragmentType.MYINFO, false, false, null)
                         it.isChecked = true
                     }
                 }
@@ -90,36 +83,25 @@ class MainActivity : AppCompatActivity() {
         return super.onKeyDown(keyCode, event)
     }
 
-    fun replaceFragment(name: String, addToBackStack: Boolean, animate: Boolean, bundle: Bundle?) {
+    fun replaceFragment(type: FragmentType, addToBackStack: Boolean, animate: Boolean, bundle: Bundle?) {
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
 
-        val newFragment = when (name) {
-            LOGIN_FRAGMENT -> LoginFragment()
-            SIGNUP_FRAGMENT -> SignupFragment()
-            PROFILE_FRAGMENT -> ProfileFragment()
-            HOME_FRAGMENT -> HomeFragment()
-            SEARCH_FRAGMENT -> SearchFragment()
-            MYINFO_FRAGMENT -> MyInfoFragment()
-            else -> Fragment()
+        val newFragment = when (type) {
+            FragmentType.LOGIN -> LoginFragment()
+            FragmentType.SIGNUP -> SignupFragment()
+            FragmentType.HOME -> HomeFragment()
+            FragmentType.SEARCH -> SearchFragment()
+            FragmentType.MYINFO -> MyInfoFragment()
         }
 
         newFragment.arguments = bundle
         fragmentTransaction.replace(R.id.mainContainer, newFragment)
-        if (addToBackStack) fragmentTransaction.addToBackStack(name)
+        if (addToBackStack) fragmentTransaction.addToBackStack(type.name)
         fragmentTransaction.commit()
     }
 
     fun popFragment(name: String) {
         supportFragmentManager.popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-    }
-
-    companion object {
-        val LOGIN_FRAGMENT = "LoginFragment"
-        val SIGNUP_FRAGMENT = "SignUpFragment"
-        val PROFILE_FRAGMENT = "ProfileFragment"
-        val HOME_FRAGMENT = "HomeFragment"
-        val SEARCH_FRAGMENT = "SearchFragment"
-        val MYINFO_FRAGMENT = "MyInfoFragment"
     }
 }

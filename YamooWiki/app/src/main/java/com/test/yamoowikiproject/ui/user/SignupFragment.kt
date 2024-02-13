@@ -10,14 +10,21 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.test.yamoowikiproject.databinding.FragmentSignupBinding
 import com.test.yamoowikiproject.dataclassmodel.User
+import com.test.yamoowikiproject.db.UserDatabase
+import com.test.yamoowikiproject.db.UserEntity
 import com.test.yamoowikiproject.ui.main.FragmentType
 import com.test.yamoowikiproject.viewmodel.MainViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class SignupFragment : Fragment() {
 
     lateinit var fragmentSignupBinding: FragmentSignupBinding
     private val mainViewModel: MainViewModel by activityViewModels()
+
+    private lateinit var db: UserDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,15 +37,13 @@ class SignupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fragmentSignupBinding.run{
-            nextProfileBtn.setOnClickListener {
-                next()
-            }
+        fragmentSignupBinding.confirmBtn.setOnClickListener {
+            confirm()
         }
     }
 
-    fun next() {
-        fragmentSignupBinding.run {
+    private fun confirm() {
+        with(fragmentSignupBinding) {
             val userId = userIdInput.text.toString()
             val userNickName = userNickNameInput.text.toString()
             val userPw = userPwInput.text.toString()
@@ -47,65 +52,52 @@ class SignupFragment : Fragment() {
             val userEmail = userEmailInput.text.toString()
 
             if (userId.isEmpty()) {
-                val builder = MaterialAlertDialogBuilder(requireContext())
-                builder.setTitle("로그인 오류")
-                builder.setMessage("아이디를 입력해주세요")
-                builder.setPositiveButton("확인") { dialogInterface: DialogInterface, i: Int ->
-                /* TODO: 동작 */
-                }
-                builder.show()
+                showDialog("로그인 오류", "아이디를 입력해주세요")
                 return
             }
 
             if (userNickName.isEmpty()) {
-                val builder = MaterialAlertDialogBuilder(requireContext())
-                builder.setTitle("닉네임 오류")
-                builder.setMessage("닉네임을 입력해주세요")
-                builder.setPositiveButton("확인") { dialogInterface: DialogInterface, i: Int ->
-                /* TODO: 동작 */
-                }
-                builder.show()
+                showDialog("닉네임 오류", "닉네임을 입력해주세요")
                 return
             }
 
             if (userPw.isEmpty() || userPwChk.isEmpty() || userPw != userPwChk) {
-                val builder = MaterialAlertDialogBuilder(requireContext())
-                builder.setTitle("비밀번호 오류")
-                builder.setMessage("비밀번호를 확인해주세요")
-                builder.setPositiveButton("확인") { dialogInterface: DialogInterface, i: Int ->
-                /* TODO: 동작 */
-                }
-                builder.show()
+                showDialog("비밀번호 오류", "비밀번호를 확인해주세요")
                 return
             }
 
             if (userPhone.isEmpty()) {
-                val builder = MaterialAlertDialogBuilder(requireContext())
-                builder.setTitle("인증번호 오류")
-                builder.setMessage("인증번호를 확인해주세요")
-                builder.setPositiveButton("확인") { dialogInterface: DialogInterface, i: Int ->
-                /* TODO: 동작 */
-                }
-                builder.show()
+                showDialog("인증번호 오류", "인증번호를 확인해주세요")
                 return
             }
 
             if (userEmail.isEmpty()) {
-                val builder = MaterialAlertDialogBuilder(requireContext())
-                builder.setTitle("이메일 오류")
-                builder.setMessage("이메일을 확인해주세요")
-                builder.setPositiveButton("확인") { dialogInterface: DialogInterface, i: Int ->
-                /* TODO: 동작 */
-                }
-                builder.show()
+                showDialog("이메일 오류", "이메일을 확인해주세요")
                 return
             }
 
-            val userModel = User(userId, userNickName, userPw, userPhone)
-            val bundle = Bundle()
-            bundle.putParcelable("signInfo", userModel)
-            mainViewModel.fragmentDestination.value = FragmentType.PROFILE
+            val userModel = UserEntity(
+                userId = userId,
+                userNickName = userNickName,
+                userPw = userPw,
+                userPhone = userPhone,
+                userEmail = userEmail
+            )
+            CoroutineScope(Dispatchers.IO).launch {
+                UserDatabase.getInstance(requireContext()).getUserDao().insertUser(userModel)
+            }
+            mainViewModel.fragmentDestination.value = FragmentType.MYINFO
         }
+    }
+
+    private fun showDialog(title: String, message: String) {
+        val builder = MaterialAlertDialogBuilder(requireContext())
+        builder.setTitle(title)
+        builder.setMessage(message)
+        builder.setPositiveButton("확인") { dialogInterface: DialogInterface, i: Int ->
+            /* TODO: 동작 */
+        }
+        builder.show()
     }
 }
 
