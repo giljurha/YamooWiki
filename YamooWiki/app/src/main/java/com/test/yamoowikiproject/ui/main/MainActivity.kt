@@ -1,16 +1,22 @@
 package com.test.yamoowikiproject.ui.main
 
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.test.yamoowikiproject.R
 import com.test.yamoowikiproject.databinding.ActivityMainBinding
+import com.test.yamoowikiproject.ui.chatroom.OpenChatRoomFragment
 import com.test.yamoowikiproject.ui.home.HomeFragment
 import com.test.yamoowikiproject.ui.myinfo.MyInfoFragment
 import com.test.yamoowikiproject.ui.search.SearchFragment
@@ -93,6 +99,7 @@ class MainActivity : AppCompatActivity() {
             FragmentType.HOME -> HomeFragment()
             FragmentType.SEARCH -> SearchFragment()
             FragmentType.MYINFO -> MyInfoFragment()
+            FragmentType.OPENCHATROOM -> OpenChatRoomFragment()
         }
 
         newFragment.arguments = bundle

@@ -28,13 +28,14 @@
         android:layout_marginHorizontal="20dp"
         app:boxBackgroundMode="outline"
         app:endIconMode="clear_text"
-        app:layout_constraintBottom_toTopOf="@id/pwLayout"
+        app:layout_constraintBottom_toTopOf="@id/passwordLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appName"
         app:layout_constraintVertical_chainStyle="packed">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/idInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="아이디"
@@ -42,7 +43,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/pwLayout"
+        android:id="@+id/passwordLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
@@ -55,6 +56,7 @@
         app:layout_constraintTop_toBottomOf="@id/idLayout">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="비밀번호"
@@ -71,7 +73,7 @@
         android:text="로그인"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pwLayout"
+        app:layout_constraintTop_toBottomOf="@+id/passwordLayout"
         app:layout_constraintBottom_toTopOf="@id/messageText"/>
 
     <TextView

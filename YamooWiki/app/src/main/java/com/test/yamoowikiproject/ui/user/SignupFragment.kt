@@ -9,8 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.test.yamoowikiproject.databinding.FragmentSignupBinding
-import com.test.yamoowikiproject.dataclassmodel.User
-import com.test.yamoowikiproject.db.UserDatabase
+import com.test.yamoowikiproject.db.YamooWikiDatabase
 import com.test.yamoowikiproject.db.UserEntity
 import com.test.yamoowikiproject.ui.main.FragmentType
 import com.test.yamoowikiproject.viewmodel.MainViewModel
@@ -24,7 +23,7 @@ class SignupFragment : Fragment() {
     lateinit var fragmentSignupBinding: FragmentSignupBinding
     private val mainViewModel: MainViewModel by activityViewModels()
 
-    private lateinit var db: UserDatabase
+    private lateinit var database: YamooWikiDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,19 +36,18 @@ class SignupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fragmentSignupBinding.confirmBtn.setOnClickListener {
+        fragmentSignupBinding.confirmButton.setOnClickListener {
             confirm()
         }
     }
 
     private fun confirm() {
         with(fragmentSignupBinding) {
-            val userId = userIdInput.text.toString()
-            val userNickName = userNickNameInput.text.toString()
-            val userPw = userPwInput.text.toString()
-            val userPwChk = userPwChkInput.text.toString()
-            val userPhone = userPhoneInput.text.toString()
-            val userEmail = userEmailInput.text.toString()
+            val userId: String = userIdInput.text.toString()
+            val userNickName: String = userNickNameInput.text.toString()
+            val userPassword: String = userPasswordInput.text.toString()
+            val userPasswordCheck: String = userPasswordInputCheck.text.toString()
+
 
             if (userId.isEmpty()) {
                 showDialog("로그인 오류", "아이디를 입력해주세요")
@@ -61,32 +59,21 @@ class SignupFragment : Fragment() {
                 return
             }
 
-            if (userPw.isEmpty() || userPwChk.isEmpty() || userPw != userPwChk) {
+            if (userPassword.isEmpty() || userPasswordCheck.isEmpty() || userPassword != userPasswordCheck) {
                 showDialog("비밀번호 오류", "비밀번호를 확인해주세요")
                 return
             }
 
-            if (userPhone.isEmpty()) {
-                showDialog("인증번호 오류", "인증번호를 확인해주세요")
-                return
-            }
-
-            if (userEmail.isEmpty()) {
-                showDialog("이메일 오류", "이메일을 확인해주세요")
-                return
-            }
 
             val userModel = UserEntity(
                 userId = userId,
                 userNickName = userNickName,
-                userPw = userPw,
-                userPhone = userPhone,
-                userEmail = userEmail
+                userPassword = userPassword
             )
             CoroutineScope(Dispatchers.IO).launch {
-                UserDatabase.getInstance(requireContext()).getUserDao().insertUser(userModel)
+                YamooWikiDatabase.getInstance(requireContext()).getUserDao().insertUser(userModel)
             }
-            mainViewModel.fragmentDestination.value = FragmentType.MYINFO
+            mainViewModel.fragmentDestination.value = FragmentType.LOGIN
         }
     }
 

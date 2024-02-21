@@ -8,12 +8,9 @@ data class User(
     var id: String?,
     var nickname: String?,
     var pw: String?,
-    var phoneNumber: String?,
-    var userEmail: String?
+
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString()
@@ -28,8 +25,6 @@ data class User(
         p0.writeString(id)
         p0.writeString(nickname)
         p0.writeString(pw)
-        p0.writeString(phoneNumber)
-        p0.writeString(userEmail)
     }
 
     companion object CREATOR : Parcelable.Creator<User> {
