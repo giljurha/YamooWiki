@@ -36,6 +36,8 @@ class SignupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // content resolver 와 glide 사용해서 프로필 사진 설정하기
+
         fragmentSignupBinding.confirmButton.setOnClickListener {
             confirm()
         }

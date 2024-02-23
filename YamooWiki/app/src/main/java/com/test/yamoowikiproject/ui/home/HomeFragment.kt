@@ -1,6 +1,8 @@
 package com.test.yamoowikiproject.ui.home
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.test.yamoowikiproject.databinding.FragmentHomeBinding
 import com.test.yamoowikiproject.db.OpenChatEntity
+import com.test.yamoowikiproject.ui.chatroom.OpenChatRoomActivity
 import com.test.yamoowikiproject.ui.main.FragmentType
 import com.test.yamoowikiproject.viewmodel.MainViewModel
 
@@ -30,7 +33,8 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mainViewModel.isVisibleBottomNavigationView.value = true
 
-        fragmentHomeBinding.recyclerView.adapter = HomeRecyclerViewAdapter(arrayListOf(
+        // db에 저장해서 db에 있는 내용을 불러오는 형식으로 바꾸기
+        val list = arrayListOf(
             OpenChatEntity(
                 openChatName = "탁구",
                 openChatOpener = "나길주",
@@ -41,26 +45,18 @@ class HomeFragment : Fragment() {
                 openChatOpener = "손흥민",
                 openChatStartDay = "0217"
             )
-        ))
+        )
+
+        fragmentHomeBinding.recyclerView.adapter = HomeRecyclerViewAdapter(list) {
+            val intent = Intent(context, OpenChatRoomActivity::class.java).apply {
+                putExtra("","")
+            }
+            startActivity(intent)
+        }
+
         fragmentHomeBinding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        fragmentHomeBinding.recyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
-            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                TODO("Not yet implemented")
-                mainViewModel.fragmentDestination.value = FragmentType.OPENCHATROOM
-            }
-
-            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
-                TODO("Not yet implemented")
-            }
-
-        })
     }
 
 
 }
-

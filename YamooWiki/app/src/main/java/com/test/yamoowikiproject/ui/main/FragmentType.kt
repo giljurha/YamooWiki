@@ -5,6 +5,5 @@ enum class FragmentType(name: String) {
     SIGNUP("Signup"),
     HOME("Home"),
     SEARCH("Search"),
-    MYINFO("MyInfo"),
-    OPENCHATROOM("OpenChatRoom")
+    MYINFO("MyInfo")
 }

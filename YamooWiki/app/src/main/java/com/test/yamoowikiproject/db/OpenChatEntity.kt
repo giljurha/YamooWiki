@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class OpenChatEntity(
-    @PrimaryKey(autoGenerate = true) val id : Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "openChatName") val openChatName: String,
     @ColumnInfo(name = "openChatOpener") val openChatOpener: String,
-    @ColumnInfo(name = "oepnChatStartDay") val openChatStartDay: String,
+    @ColumnInfo(name = "openChatStartDay") val openChatStartDay: String,
 )
