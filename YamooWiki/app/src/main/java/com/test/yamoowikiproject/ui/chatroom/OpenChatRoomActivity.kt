@@ -17,6 +17,7 @@ class OpenChatRoomActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityOpenChatRoomBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         /* TODO:  */
         /* TODO: 사진 로컬 갤러리에서 접근해서 올리기 */
     }

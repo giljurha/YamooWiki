@@ -35,6 +35,8 @@ class HomeRecyclerViewAdapter(
             parent,
             false
         )
+
+
         return MyViewHolder(binding, onClickItem)
     }
 

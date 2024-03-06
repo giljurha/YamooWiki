@@ -104,4 +104,5 @@ class MainActivity : AppCompatActivity() {
     fun popFragment(name: String) {
         supportFragmentManager.popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
+
 }

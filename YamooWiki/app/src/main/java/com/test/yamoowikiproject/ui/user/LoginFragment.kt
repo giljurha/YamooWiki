@@ -29,8 +29,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        fragmentLoginBinding = FragmentLoginBinding.inflate(layoutInflater)
+        fragmentLoginBinding = FragmentLoginBinding.inflate(inflater)
         return fragmentLoginBinding.root
     }
 

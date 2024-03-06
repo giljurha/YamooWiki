@@ -110,10 +110,21 @@
                 android:ems="10"
                 android:hint="비밀번호 재입력"
                 android:inputType="textPassword"
-                app:layout_constraintBottom_toTopOf="@+id/confirmButton"
+                app:layout_constraintBottom_toTopOf="@+id/userProfileImage"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/userPasswordInput" />
+
+            <ImageView
+                android:id="@+id/userProfileImage"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:adjustViewBounds="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userPasswordInputCheck"
+                app:layout_constraintBottom_toTopOf="@id/confirmButton"
+                android:src="@drawable/ic_launcher_background" />
 
             <Button
                 android:id="@+id/confirmButton"
@@ -125,7 +136,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/userPasswordInputCheck" />
+                app:layout_constraintTop_toBottomOf="@id/userProfileImage" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

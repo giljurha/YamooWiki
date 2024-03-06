@@ -28,6 +28,7 @@ class HomeFragment : Fragment() {
         fragmentHomeBinding = FragmentHomeBinding.inflate(layoutInflater)
         return fragmentHomeBinding.root
     }
+
     /*TODO: 뒤로가기 눌렀을 경우 앱 종료 될 수 있도록 설정해야함.*/
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
