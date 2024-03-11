@@ -67,22 +67,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private var backPressedOnce = false
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (backPressedOnce) {
-                finish() // 앱 종료
-            } else {
-                backPressedOnce = true
-                Toast.makeText(this, "한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
-                Handler().postDelayed({ backPressedOnce = false }, 2000)
-            }
-            return true
-        }
-        return super.onKeyDown(keyCode, event)
-    }
-
     fun replaceFragment(type: FragmentType, addToBackStack: Boolean, animate: Boolean, bundle: Bundle?) {
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()

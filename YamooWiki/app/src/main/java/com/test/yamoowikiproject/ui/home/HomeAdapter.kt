@@ -35,8 +35,6 @@ class HomeRecyclerViewAdapter(
             parent,
             false
         )
-
-
         return MyViewHolder(binding, onClickItem)
     }
 
@@ -45,7 +43,6 @@ class HomeRecyclerViewAdapter(
         holder.onBind(openChatData)
     }
 
-    override fun getItemCount(): Int {
-        return openChatList.size
-    }
+    override fun getItemCount(): Int = openChatList.size
+
 }
