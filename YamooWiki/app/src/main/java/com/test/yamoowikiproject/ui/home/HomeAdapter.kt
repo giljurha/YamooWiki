@@ -37,12 +37,11 @@ class HomeRecyclerViewAdapter(
         )
         return MyViewHolder(binding, onClickItem)
     }
+    override fun getItemCount(): Int = openChatList.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val openChatData = openChatList[position]
         holder.onBind(openChatData)
     }
-
-    override fun getItemCount(): Int = openChatList.size
 
 }
