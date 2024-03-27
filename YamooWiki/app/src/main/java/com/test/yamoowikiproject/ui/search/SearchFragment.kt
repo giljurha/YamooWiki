@@ -18,5 +18,4 @@ class SearchFragment : Fragment() {
         fragmentSearchBiding = FragmentSearchBinding.inflate(layoutInflater)
         return fragmentSearchBiding.root
     }
-
 }

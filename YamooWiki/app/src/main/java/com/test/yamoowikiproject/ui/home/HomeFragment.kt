@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
     /*TODO: 뒤로가기 눌렀을 경우 앱 종료 될 수 있도록 설정해야함.*/
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainViewModel.isVisibleBottomNavigationView.value = true
+        mainViewModel.changeStateBottomNavigaitonView()
 
         // db에 저장해서 db에 있는 내용을 불러오는 형식으로 바꾸기
         val list = arrayListOf(
@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
 
         fragmentHomeBinding.recyclerView.adapter = HomeRecyclerViewAdapter(list) {
             val intent = Intent(context, OpenChatRoomActivity::class.java).apply {
-                putExtra("OpenChatRoomActivity","")
+                putExtra("OpenChatRoomActivity", "")
             }
             startActivity(intent)
         }

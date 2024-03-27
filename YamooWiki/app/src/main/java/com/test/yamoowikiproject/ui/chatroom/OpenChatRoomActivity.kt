@@ -21,5 +21,4 @@ class OpenChatRoomActivity : AppCompatActivity() {
         /* TODO:  */
         /* TODO: 사진 로컬 갤러리에서 접근해서 올리기 */
     }
-
 }

@@ -7,19 +7,17 @@ import com.test.yamoowikiproject.databinding.ItemHomeBinding
 import com.test.yamoowikiproject.db.OpenChatEntity
 
 class MyViewHolder(
-    binding: ItemHomeBinding,
+    private val binding: ItemHomeBinding,
     private val onClickItem: (OpenChatEntity) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private val openChatId = binding.openChatId
-    private val openChatTitle = binding.openChatTitle
-    private val root = binding.root
-
     fun onBind(openChatData: OpenChatEntity) {
-        openChatId.text = openChatData.id.toString()
-        openChatTitle.text = openChatData.openChatName
-        root.setOnClickListener {
-            onClickItem(openChatData)
+        with(binding) {
+            openChatId.text = openChatData.id.toString()
+            openChatTitle.text = openChatData.openChatName
+            root.setOnClickListener {
+                onClickItem(openChatData)
+            }
         }
     }
 }
@@ -37,11 +35,20 @@ class HomeRecyclerViewAdapter(
         )
         return MyViewHolder(binding, onClickItem)
     }
+
+    override fun getItemViewType(position: Int): Int {
+
+        return if (position%2 == 0) {
+            1
+        } else {
+            2
+        }
+    }
+
     override fun getItemCount(): Int = openChatList.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val openChatData = openChatList[position]
         holder.onBind(openChatData)
     }
-
 }

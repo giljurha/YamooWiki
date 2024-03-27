@@ -4,43 +4,30 @@ import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.test.yamoowikiproject.R
-
 import com.test.yamoowikiproject.databinding.FragmentSignupBinding
 import com.test.yamoowikiproject.db.YamooWikiDatabase
 import com.test.yamoowikiproject.db.UserEntity
-import com.test.yamoowikiproject.ui.main.FragmentType
 import com.test.yamoowikiproject.viewmodel.MainViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
+import com.test.yamoowikiproject.viewmodel.SignupViewModel
 
 
 class SignupFragment : Fragment() {
 
     lateinit var fragmentSignupBinding: FragmentSignupBinding
     private val mainViewModel: MainViewModel by activityViewModels()
+    private val signupViewModel: SignupViewModel by activityViewModels()
 
     private lateinit var database: YamooWikiDatabase
 
@@ -55,49 +42,32 @@ class SignupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // content resolver 와 glide 사용해서 프로필 사진 설정하기
-
         fragmentSignupBinding.confirmButton.setOnClickListener {
-            confirm()
+            signupViewModel.signup(user = confirm(), context = requireContext())
         }
         fragmentSignupBinding.userProfileImage.setOnClickListener{
             selectGallery()
         }
     }
 
-    private fun confirm() {
+    private fun confirm(): UserEntity {
         with(fragmentSignupBinding) {
             val userId: String = userIdInput.text.toString()
             val userNickName: String = userNickNameInput.text.toString()
             val userPassword: String = userPasswordInput.text.toString()
             val userPasswordCheck: String = userPasswordInputCheck.text.toString()
 
-
-            if (userId.isEmpty()) {
-                showDialog("로그인 오류", "아이디를 입력해주세요")
-                return
+            when {
+                userId.isEmpty() -> showDialog("로그인 오류", "아이디를 입력해주세요")
+                userNickName.isEmpty() -> showDialog("닉네임 오류", "닉네임을 입력해주세요")
+                userPassword.isEmpty() || userPasswordCheck.isEmpty() || userPassword != userPasswordCheck ->
+                    showDialog("비밀번호 오류", "비밀번호를 확인해주세요")
+                else -> showDialog("회원가입", "회원가입이 완료되었습니다")
             }
-
-            if (userNickName.isEmpty()) {
-                showDialog("닉네임 오류", "닉네임을 입력해주세요")
-                return
-            }
-
-            if (userPassword.isEmpty() || userPasswordCheck.isEmpty() || userPassword != userPasswordCheck) {
-                showDialog("비밀번호 오류", "비밀번호를 확인해주세요")
-                return
-            }
-
-
-            val userModel = UserEntity(
-                userId = userId,
-                userNickName = userNickName,
-                userPassword = userPassword
-            )
-            CoroutineScope(Dispatchers.IO).launch {
-                YamooWikiDatabase.getInstance(requireContext()).getUserDao().insertUser(userModel)
-            }
-            mainViewModel.fragmentDestination.value = FragmentType.LOGIN
+            mainViewModel.changeFragmentType("Login")
+            // 네임드아규먼츠
+            val user = UserEntity(userNickName = userNickName, userPassword = userPassword, userId = userId)
+            return user
         }
     }
 
@@ -132,7 +102,6 @@ class SignupFragment : Fragment() {
 //            .check()
 //    }
 
-
     private fun selectGallery() {
 
         val readPermission = ContextCompat.checkSelfPermission(
@@ -156,9 +125,6 @@ class SignupFragment : Fragment() {
         }
     }
 
-
-
-
     var imageResult = registerForActivityResult( //oncreate에서만 정의가능 -> 모듈화 불가능
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -168,12 +134,5 @@ class SignupFragment : Fragment() {
                 .override(200,200)
                 .into(fragmentSignupBinding.userProfileImage)
         }
-
-
     }
-
-
-
-
-
 }
