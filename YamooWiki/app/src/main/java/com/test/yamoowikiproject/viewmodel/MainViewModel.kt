@@ -20,13 +20,7 @@ class MainViewModel : ViewModel() {
         _isVisibleBottomNavigationView.value = false
     }
 
-    fun changeFragmentType(fragmentName: String) {
-        when (fragmentName) {
-            "Login" -> _fragmentDestination.value = FragmentType.LOGIN
-            "Signup" -> _fragmentDestination.value = FragmentType.SIGNUP
-            "Home" -> _fragmentDestination.value = FragmentType.HOME
-            "Search" -> _fragmentDestination.value = FragmentType.SEARCH
-            "MyInfo" -> _fragmentDestination.value = FragmentType.MYINFO
-        }
+    fun changeFragmentType(fragmentType: FragmentType) {
+        _fragmentDestination.value = fragmentType
     }
 }

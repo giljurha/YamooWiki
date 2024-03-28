@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(activityMainbinding.root)
 
         /* TODO: preference 값 체크 후 로그인 수행 */
-        replaceFragment(FragmentType.LOGIN, false, false, null)
+        replaceFragment(FragmentType.LOGIN, false, null)
 
         mainViewModel.isVisibleBottomNavigationView.observe(this) {
             if (it == false) {
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainViewModel.fragmentDestination.observe(this) {
-            replaceFragment(it, false, false, null)
+            replaceFragment(it, false, null)
         }
 
 
@@ -50,15 +51,15 @@ class MainActivity : AppCompatActivity() {
             bottomNavigationView.setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.home -> {
-                        replaceFragment(FragmentType.HOME, false, false, null)
+                        replaceFragment(FragmentType.HOME, false, null)
                         it.isChecked = true
                     }
                     R.id.search -> {
-                        replaceFragment(FragmentType.SEARCH, false, false, null)
+                        replaceFragment(FragmentType.SEARCH, false,null)
                         it.isChecked = true
                     }
                     R.id.myInfo -> {
-                        replaceFragment(FragmentType.MYINFO, false, false, null)
+                        replaceFragment(FragmentType.MYINFO, false,null)
                         it.isChecked = true
                     }
                 }
@@ -67,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun replaceFragment(type: FragmentType, addToBackStack: Boolean, animate: Boolean, bundle: Bundle?) {
+    fun replaceFragment(type: FragmentType, addToBackStack: Boolean, bundle: Bundle?) {
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
 
@@ -87,6 +88,10 @@ class MainActivity : AppCompatActivity() {
 
     fun popFragment(name: String) {
         supportFragmentManager.popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        return super.dispatchTouchEvent(ev)
     }
 
 }

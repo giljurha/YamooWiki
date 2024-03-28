@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 
 class SignupViewModel : ViewModel() {
-    val userModelLiveData = MutableLiveData<User>()
+    /* TODO: glide에서 처리한 이미지를 db에 저장하는 값을 저장 */
 
     fun signup(user: UserEntity, context: Context) {
 
