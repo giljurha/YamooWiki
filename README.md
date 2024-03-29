@@ -4,4 +4,5 @@
 Architecture | MVVM
 Jetpack Library | Fragment, Toolbar, Livedata, Viewmodel, Databinding
 Database | Room
-Asynchronous Process | Coroutine
+Asynchronous process | Coroutine
+Image rendering | Glide
