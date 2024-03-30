@@ -4,17 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.test.yamoowikiproject.databinding.ItemHomeBinding
-import com.test.yamoowikiproject.db.OpenChatEntity
+import com.test.yamoowikiproject.db.OpenPostEntity
 
 class MyViewHolder(
     private val binding: ItemHomeBinding,
-    private val onClickItem: (OpenChatEntity) -> Unit
+    private val onClickItem: (OpenPostEntity) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun onBind(openChatData: OpenChatEntity) {
+    fun onBind(openChatData: OpenPostEntity) {
+
         with(binding) {
             openChatId.text = openChatData.id.toString()
-            openChatTitle.text = openChatData.openChatName
+            openChatTitle.text = openChatData.openPostName
             root.setOnClickListener {
                 onClickItem(openChatData)
             }
@@ -23,8 +24,8 @@ class MyViewHolder(
 }
 
 class HomeRecyclerViewAdapter(
-    private val openChatList: ArrayList<OpenChatEntity>,
-    private val onClickItem: (OpenChatEntity) -> Unit
+    private val openChatList: MutableList<OpenPostEntity>,
+    private val onClickItem: (OpenPostEntity) -> Unit
 ) : RecyclerView.Adapter<MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

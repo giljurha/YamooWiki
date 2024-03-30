@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.test.yamoowikiproject.R
 import com.test.yamoowikiproject.databinding.FragmentSignupBinding
 import com.test.yamoowikiproject.db.YamooWikiDatabase
 import com.test.yamoowikiproject.db.UserEntity
@@ -48,6 +49,7 @@ class SignupFragment : Fragment() {
         fragmentSignupBinding.userProfileImage.setOnClickListener {
             selectGallery()
         }
+
     }
 
     private fun confirm(): UserEntity {
@@ -76,16 +78,19 @@ class SignupFragment : Fragment() {
         }
     }
 
-    private fun showDialog(title: String, message: String) {
-        val builder = MaterialAlertDialogBuilder(requireContext())
-        builder.setTitle(title)
-        builder.setMessage(message)
-        builder.setPositiveButton("확인") { dialogInterface: DialogInterface, i: Int ->
-            /* TODO: 동작 */
-        }
-        builder.show()
-    }
 
+    private fun showDialog(title: String, message: String) {
+        MaterialAlertDialogBuilder(requireContext()).run {
+            setTitle(title)
+            setIcon(R.drawable.baseline_person_outline_24)
+            setMessage(message)
+            setPositiveButton("확인", null)
+            setNegativeButton("취소", null)
+            setNeutralButton("닫기", null)
+            setCancelable(true)
+            show()
+        }.setCanceledOnTouchOutside(true)
+    }
 
     private fun selectGallery() {
         val readPermission = ContextCompat.checkSelfPermission(
@@ -133,6 +138,4 @@ class SignupFragment : Fragment() {
             requestPermission()
         }
     }
-
-
 }

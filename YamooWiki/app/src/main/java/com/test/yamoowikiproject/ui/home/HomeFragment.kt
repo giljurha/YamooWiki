@@ -2,19 +2,15 @@ package com.test.yamoowikiproject.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.test.yamoowikiproject.databinding.FragmentHomeBinding
-import com.test.yamoowikiproject.db.OpenChatEntity
+import com.test.yamoowikiproject.db.OpenPostEntity
 import com.test.yamoowikiproject.ui.chatroom.OpenChatRoomActivity
-import com.test.yamoowikiproject.ui.main.FragmentType
 import com.test.yamoowikiproject.viewmodel.MainViewModel
 
 
@@ -35,16 +31,14 @@ class HomeFragment : Fragment() {
         mainViewModel.changeStateBottomNavigaitonView()
 
         // db에 저장해서 db에 있는 내용을 불러오는 형식으로 바꾸기
-        val list = arrayListOf(
-            OpenChatEntity(
-                openChatName = "탁구",
-                openChatOpener = "나길주",
-                openChatStartDay = "0215"
+        val list = mutableListOf(
+            OpenPostEntity(
+                openPostName = "탁구",
+                openPostStartDay = "나길주"
             ),
-            OpenChatEntity(
-                openChatName = "축구",
-                openChatOpener = "손흥민",
-                openChatStartDay = "0217"
+            OpenPostEntity(
+                openPostName = "탁구",
+                openPostStartDay = "나길주"
             )
         )
 

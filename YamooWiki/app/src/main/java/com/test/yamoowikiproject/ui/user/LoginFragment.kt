@@ -45,6 +45,7 @@ class LoginFragment : Fragment() {
                 loginViewModel.login(id, password, requireContext())
                 /* TODO: 정상적으로 로그인 되었을 때만 아래에 수행 */
                 mainViewModel.changeFragmentType(FragmentType.HOME)
+                mainViewModel.changeStateBottomNavigaitonView()
                 Toast.makeText(context, "회원가입이 완료되었습니다", Toast.LENGTH_SHORT).show()
             }
             signupText.setOnClickListener {

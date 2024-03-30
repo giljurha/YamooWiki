@@ -16,8 +16,8 @@ class MainViewModel : ViewModel() {
         get() = _fragmentDestination
 
 
-    fun changeStateBottomNavigaitonView(){
-        _isVisibleBottomNavigationView.value = false
+    fun changeStateBottomNavigaitonView() {
+        _isVisibleBottomNavigationView.value = true
     }
 
     fun changeFragmentType(fragmentType: FragmentType) {
