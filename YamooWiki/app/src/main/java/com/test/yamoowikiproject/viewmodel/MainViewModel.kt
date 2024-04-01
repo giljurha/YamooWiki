@@ -17,7 +17,11 @@ class MainViewModel : ViewModel() {
 
 
     fun changeStateBottomNavigaitonView() {
-        _isVisibleBottomNavigationView.value = true
+        if (_isVisibleBottomNavigationView.value == true) {
+            _isVisibleBottomNavigationView.value = false
+        } else {
+            _isVisibleBottomNavigationView.value = true
+        }
     }
 
     fun changeFragmentType(fragmentType: FragmentType) {
