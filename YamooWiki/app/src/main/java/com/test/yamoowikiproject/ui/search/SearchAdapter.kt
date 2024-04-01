@@ -14,7 +14,7 @@ class SearchRecyclerViewAdapter(val data: MutableList<Int>)
         val itemSearchBinding: ItemSearchBinding = ItemSearchBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
-        return SearchViewHolder(itemSearchBinding)
+        return SearchViewHolder(itemSearchBinding = itemSearchBinding)
     }
 
     override fun getItemCount(): Int = data.size
