@@ -31,7 +31,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainViewModel.changeStateBottomNavigaitonView()
+        mainViewModel.changeStateBottomNavigaitonView(FragmentType.LOGIN)
         loginViewModel.isLogin.observe(viewLifecycleOwner) {
             if (it == true) {
                 mainViewModel.changeFragmentType(FragmentType.HOME)
@@ -45,7 +45,7 @@ class LoginFragment : Fragment() {
                 loginViewModel.login(id, password, requireContext())
                 /* TODO: 정상적으로 로그인 되었을 때만 아래에 수행 */
                 mainViewModel.changeFragmentType(FragmentType.HOME)
-                mainViewModel.changeStateBottomNavigaitonView()
+                mainViewModel.changeStateBottomNavigaitonView(FragmentType.HOME)
                 Toast.makeText(context, "회원가입이 완료되었습니다", Toast.LENGTH_SHORT).show()
             }
             signupText.setOnClickListener {

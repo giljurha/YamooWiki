@@ -16,12 +16,15 @@ class MainViewModel : ViewModel() {
         get() = _fragmentDestination
 
 
-    fun changeStateBottomNavigaitonView() {
-        if (_isVisibleBottomNavigationView.value == true) {
-            _isVisibleBottomNavigationView.value = false
-        } else {
-            _isVisibleBottomNavigationView.value = true
+    fun changeStateBottomNavigaitonView(type: FragmentType) {
+        val fragmentType = when (type) {
+            FragmentType.LOGIN -> false
+            FragmentType.SIGNUP -> false
+            FragmentType.HOME -> true
+            FragmentType.SEARCH -> true
+            FragmentType.MYINFO -> true
         }
+        _isVisibleBottomNavigationView.value = fragmentType
     }
 
     fun changeFragmentType(fragmentType: FragmentType) {
