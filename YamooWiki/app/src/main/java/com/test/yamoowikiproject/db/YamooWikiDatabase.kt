@@ -10,7 +10,7 @@ abstract class YamooWikiDatabase : RoomDatabase() {
 
     abstract fun getUserDao(): UserDao
     abstract fun getOpenPostDao(): OpenPostDao
-    abstract fun getImageDao(): ImageDao
+
 
 
     companion object {
