@@ -12,8 +12,8 @@ class SignupViewModel : ViewModel() {
 
     fun signup(user: UserEntity, context: Context) {
         CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
-            com.test.yamoowikiproject.db.YamooWikiDatabase.getInstance(context).getUserDao()
-                .insertUser(user)
+            com.test.yamoowikiproject.db.YamooWikiDatabase.getInstance(context = context).getUserDao()
+                .insertUser(user = user)
         }
     }
 }

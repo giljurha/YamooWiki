@@ -16,15 +16,15 @@ class MainViewModel : ViewModel() {
         get() = _fragmentDestination
 
 
-    fun changeStateBottomNavigaitonView(type: FragmentType) {
-        val fragmentType = when (type) {
+    fun changeStateBottomNavigaitonView(fragmentType: FragmentType) {
+        val type = when (fragmentType) {
             FragmentType.LOGIN -> false
             FragmentType.SIGNUP -> false
             FragmentType.HOME -> true
             FragmentType.SEARCH -> true
             FragmentType.MYINFO -> true
         }
-        _isVisibleBottomNavigationView.value = fragmentType
+        _isVisibleBottomNavigationView.value = type
     }
 
     fun changeFragmentType(fragmentType: FragmentType) {

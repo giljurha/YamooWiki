@@ -41,9 +41,9 @@ class HomeFragment : Fragment() {
             )
         )
 
-        fragmentHomeBinding.recyclerView.adapter = HomeRecyclerViewAdapter(list) {
+        fragmentHomeBinding.recyclerView.adapter = HomeRecyclerViewAdapter(openChatList = list) {
             val intent = Intent(context, OpenChatRoomActivity::class.java).apply {
-                putExtra("OpenChatRoomActivity", "")
+                putExtra("OpenChatRoomActivity", 10)
             }
             startActivity(intent)
         }

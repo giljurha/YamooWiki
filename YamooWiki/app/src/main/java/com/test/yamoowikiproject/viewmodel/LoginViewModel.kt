@@ -19,9 +19,9 @@ class LoginViewModel : ViewModel() {
     fun login(id: String, password: String, context: Context) {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val userEntity = YamooWikiDatabase.getInstance(context)
+            val userEntity = YamooWikiDatabase.getInstance(context = context)
                 .getUserDao()
-                .getUserInfo(id, password)
+                .getUserInfo(userId = id, password = password)
 
             _isLogin.postValue(userEntity != null)
         }

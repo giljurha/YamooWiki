@@ -1,9 +1,9 @@
 package com.test.yamoowikiproject.ui.user
 
 import android.app.Activity
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -59,20 +59,24 @@ class SignupFragment : Fragment() {
             val userPassword: String = userPasswordInput.text.toString()
             val userPasswordCheck: String = userPasswordInputCheck.text.toString()
 
-            when {
-                userId.isEmpty() -> showDialog("로그인 오류", "아이디를 입력해주세요")
-                userNickName.isEmpty() -> showDialog("닉네임 오류", "닉네임을 입력해주세요")
-                userPassword.isEmpty() || userPasswordCheck.isEmpty() || userPassword != userPasswordCheck ->
-                    showDialog("비밀번호 오류", "비밀번호를 확인해주세요")
 
-                else -> showDialog("회원가입", "회원가입이 완료되었습니다")
+            val (title: String, message: String) = when {
+                userId.isEmpty() -> ("로그인 오류" to "아이디를 입력해주세요")
+                userNickName.isEmpty() -> ("닉네임 오류" to "닉네임을 입력해주세요")
+                userPassword.isEmpty() || userPasswordCheck.isEmpty() || userPassword != userPasswordCheck ->
+                    ("비밀번호 오류" to "비밀번호를 확인해주세요")
+                uri == null -> ("프로필 오류" to "프로필 사진을 넣어주세요")
+
+                else -> ("회원가입" to "회원가입이 완료되었습니다")
             }
-            mainViewModel.changeFragmentType(FragmentType.LOGIN)
+            showDialog(title = title, message = message)
+            mainViewModel.changeFragmentType(fragmentType = FragmentType.LOGIN)
             // 네임드아규먼츠
             val user = UserEntity(
                 userNickName = userNickName,
                 userPassword = userPassword,
-                userId = userId
+                userId = userId,
+                userImage = uri.toString()
             )
             return user
         }
@@ -86,14 +90,16 @@ class SignupFragment : Fragment() {
             setMessage(message)
             setPositiveButton("확인", null)
             setNegativeButton("취소", null)
-            setNeutralButton("닫기", null)
+            setNeutralButton("닫기") { dialog, which ->
+
+            }
             setCancelable(true)
             show()
         }.setCanceledOnTouchOutside(true)
     }
 
     private fun selectGallery() {
-        val readPermission = ContextCompat.checkSelfPermission(
+        val readPermission: Int = ContextCompat.checkSelfPermission(
             requireContext(),
             android.Manifest.permission.READ_EXTERNAL_STORAGE
         )
@@ -106,7 +112,7 @@ class SignupFragment : Fragment() {
     }
 
     private fun setImageResult() {
-        val intent = Intent(Intent.ACTION_PICK)
+        val intent  = Intent(Intent.ACTION_PICK)
         intent.setDataAndType(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             "image/*"
@@ -122,6 +128,7 @@ class SignupFragment : Fragment() {
         ActivityResultContracts.StartActivityForResult()
     ) {
         if (it.resultCode == Activity.RESULT_OK) {
+            uri = it.data?.data
             Glide.with(this)
                 .load(it.data?.data)
                 .override(200, 200)
@@ -138,4 +145,6 @@ class SignupFragment : Fragment() {
             requestPermission()
         }
     }
+
+    private var uri: Uri? = null
 }
