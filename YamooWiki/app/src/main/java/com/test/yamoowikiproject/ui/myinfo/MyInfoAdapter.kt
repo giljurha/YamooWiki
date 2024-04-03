@@ -21,7 +21,7 @@ class MyInfoAdapter(val data: MutableList<String>)
     override fun getItemCount(): Int = data.size
 
     override fun onBindViewHolder(holder: MyInfoViewHolder, position: Int) {
-        holder.itemMyInfoBinding.textView.text = data[position].toString()
+        holder.itemMyInfoBinding.textView.text = data[position]
     }
 
 }

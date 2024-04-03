@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(activityMainbinding.root)
 
         /* TODO: preference 값 체크 후 로그인 수행 */
-        replaceFragment(FragmentType.LOGIN, false, null)
+        replaceFragment(fragmentType = FragmentType.LOGIN, addToBackStack = false, bundle = null)
 
         mainViewModel.isVisibleBottomNavigationView.observe(this) {
             if (it == false) {
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainViewModel.fragmentDestination.observe(this) {
-            replaceFragment(it, false, null)
+            replaceFragment(fragmentType = it, addToBackStack = false, bundle = null)
         }
 
 
@@ -51,15 +51,15 @@ class MainActivity : AppCompatActivity() {
             bottomNavigationView.setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.home -> {
-                        replaceFragment(FragmentType.HOME, false, null)
+                        replaceFragment(fragmentType = FragmentType.HOME, addToBackStack = false, bundle = null)
                         it.isChecked = true
                     }
                     R.id.search -> {
-                        replaceFragment(FragmentType.SEARCH, false,null)
+                        replaceFragment(fragmentType = FragmentType.SEARCH, addToBackStack = false, bundle = null)
                         it.isChecked = true
                     }
                     R.id.myInfo -> {
-                        replaceFragment(FragmentType.MYINFO, false,null)
+                        replaceFragment(fragmentType = FragmentType.MYINFO, addToBackStack = false, bundle = null)
                         it.isChecked = true
                     }
                 }
@@ -68,11 +68,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun replaceFragment(type: FragmentType, addToBackStack: Boolean, bundle: Bundle?) {
+    fun replaceFragment(fragmentType: FragmentType, addToBackStack: Boolean, bundle: Bundle?) {
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
 
-        val newFragment = when (type) {
+        val newFragment = when (fragmentType) {
             FragmentType.LOGIN -> LoginFragment()
             FragmentType.SIGNUP -> SignupFragment()
             FragmentType.HOME -> HomeFragment()
@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
 
         newFragment.arguments = bundle
         fragmentTransaction.replace(R.id.mainContainer, newFragment)
-        if (addToBackStack) fragmentTransaction.addToBackStack(type.name)
+        if (addToBackStack) fragmentTransaction.addToBackStack(fragmentType.name)
         fragmentTransaction.commit()
     }
 

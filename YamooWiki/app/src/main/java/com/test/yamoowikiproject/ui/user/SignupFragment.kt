@@ -44,7 +44,7 @@ class SignupFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         fragmentSignupBinding.confirmButton.setOnClickListener {
-            signupViewModel.signup(user = confirm(), context = requireContext())
+            signupViewModel.signup(userEntity = confirm(), context = requireContext())
         }
         fragmentSignupBinding.userProfileImage.setOnClickListener {
             selectGallery()
