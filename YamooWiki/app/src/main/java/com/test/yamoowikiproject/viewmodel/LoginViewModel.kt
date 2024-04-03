@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.test.yamoowikiproject.db.UserEntity
 import com.test.yamoowikiproject.db.YamooWikiDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,15 +16,22 @@ class LoginViewModel : ViewModel() {
     val isLogin: LiveData<Boolean>
         get() = _isLogin
 
+//    val user: UserEntity? by lazy {
+//
+//    }
+
+
 
     fun login(id: String, password: String, context: Context) {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val userEntity = YamooWikiDatabase.getInstance(context = context)
+            val userEntity = YamooWikiDatabase
+                .getInstance(context = context)
                 .getUserDao()
                 .getUserInfo(userId = id, password = password)
 
             _isLogin.postValue(userEntity != null)
+//            user = userEntity
         }
     }
 }

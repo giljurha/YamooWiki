@@ -15,18 +15,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.test.yamoowikiproject.R
 import com.test.yamoowikiproject.databinding.FragmentSignupBinding
 import com.test.yamoowikiproject.db.YamooWikiDatabase
 import com.test.yamoowikiproject.db.UserEntity
 import com.test.yamoowikiproject.ui.main.FragmentType
+import com.test.yamoowikiproject.ui.user.model.SignupErrorState
 import com.test.yamoowikiproject.viewmodel.MainViewModel
 import com.test.yamoowikiproject.viewmodel.SignupViewModel
 
 
 class SignupFragment : Fragment() {
 
-    lateinit var fragmentSignupBinding: FragmentSignupBinding
+    lateinit var binding: FragmentSignupBinding
     private val mainViewModel: MainViewModel by activityViewModels()
     private val signupViewModel: SignupViewModel by activityViewModels()
 
@@ -36,42 +36,50 @@ class SignupFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        fragmentSignupBinding = FragmentSignupBinding.inflate(layoutInflater)
-        return fragmentSignupBinding.root
+        binding = FragmentSignupBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fragmentSignupBinding.confirmButton.setOnClickListener {
-            signupViewModel.signup(userEntity = confirm(), context = requireContext())
+        binding.btnConfirm.setOnClickListener {
+            confirm()?.let {
+                signupViewModel.signup(userEntity = it, context = requireContext())
+            }
         }
-        fragmentSignupBinding.userProfileImage.setOnClickListener {
+        binding.userProfileImage.setOnClickListener {
             selectGallery()
         }
 
     }
 
-    private fun confirm(): UserEntity {
-        with(fragmentSignupBinding) {
-            val userId: String = userIdInput.text.toString()
+    private fun confirm(): UserEntity? {
+        with(binding) {
+            val userId: String = etUserId.text.toString()
             val userNickName: String = userNickNameInput.text.toString()
             val userPassword: String = userPasswordInput.text.toString()
             val userPasswordCheck: String = userPasswordInputCheck.text.toString()
 
 
-            val (title: String, message: String) = when {
-                userId.isEmpty() -> ("로그인 오류" to "아이디를 입력해주세요")
-                userNickName.isEmpty() -> ("닉네임 오류" to "닉네임을 입력해주세요")
-                userPassword.isEmpty() || userPasswordCheck.isEmpty() || userPassword != userPasswordCheck ->
-                    ("비밀번호 오류" to "비밀번호를 확인해주세요")
-                uri == null -> ("프로필 오류" to "프로필 사진을 넣어주세요")
+            val errorState: SignupErrorState = when {
+                userId.isEmpty() -> SignupErrorState.ID
+                userNickName.isEmpty() -> SignupErrorState.NICKNAME
+                userPassword.isEmpty() || userPasswordCheck.isEmpty()
+                        || userPassword != userPasswordCheck ->
+                    SignupErrorState.PASSWORD
+                uri == null -> SignupErrorState.PROFILE
 
-                else -> ("회원가입" to "회원가입이 완료되었습니다")
+                else -> SignupErrorState.NONE
             }
-            showDialog(title = title, message = message)
+
+            if (errorState != SignupErrorState.NONE) {
+                showDialog(errorState)
+                return null
+            }
+
             mainViewModel.changeFragmentType(fragmentType = FragmentType.LOGIN)
-            // 네임드아규먼츠
+
             val user = UserEntity(
                 userNickName = userNickName,
                 userPassword = userPassword,
@@ -83,15 +91,18 @@ class SignupFragment : Fragment() {
     }
 
 
-    private fun showDialog(title: String, message: String) {
+    private fun showDialog(errorState: SignupErrorState) {
         MaterialAlertDialogBuilder(requireContext()).run {
-            setTitle(title)
-            setIcon(R.drawable.baseline_person_outline_24)
-            setMessage(message)
-            setPositiveButton("확인", null)
-            setNegativeButton("취소", null)
-            setNeutralButton("닫기") { dialog, which ->
-
+            setTitle(errorState.title)
+            setMessage(errorState.message)
+            setPositiveButton("확인") { dialog, which ->
+                when (errorState) {
+                    SignupErrorState.ID -> binding.etUserId.requestFocus()
+                    SignupErrorState.NICKNAME -> binding.userNickNameInput.requestFocus()
+                    SignupErrorState.PASSWORD -> binding.userPasswordInput.requestFocus()
+                    SignupErrorState.PROFILE -> binding.userProfileImage.requestFocus()
+                    SignupErrorState.NONE -> Unit
+                }
             }
             setCancelable(true)
             show()
@@ -112,7 +123,7 @@ class SignupFragment : Fragment() {
     }
 
     private fun setImageResult() {
-        val intent  = Intent(Intent.ACTION_PICK)
+        val intent = Intent(Intent.ACTION_PICK)
         intent.setDataAndType(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             "image/*"
@@ -132,7 +143,7 @@ class SignupFragment : Fragment() {
             Glide.with(this)
                 .load(it.data?.data)
                 .override(200, 200)
-                .into(fragmentSignupBinding.userProfileImage)
+                .into(binding.userProfileImage)
         }
     }
 

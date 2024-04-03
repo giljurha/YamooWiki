@@ -2,16 +2,12 @@ package com.test.yamoowikiproject.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.FragmentManager
 import com.test.yamoowikiproject.R
 import com.test.yamoowikiproject.databinding.ActivityMainBinding
-import com.test.yamoowikiproject.ui.chatroom.OpenChatRoomActivity
 import com.test.yamoowikiproject.ui.home.HomeFragment
 import com.test.yamoowikiproject.ui.myinfo.MyInfoFragment
 import com.test.yamoowikiproject.ui.search.SearchFragment

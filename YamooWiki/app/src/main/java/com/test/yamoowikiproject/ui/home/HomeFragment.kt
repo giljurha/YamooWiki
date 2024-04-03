@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.yamoowikiproject.databinding.FragmentHomeBinding
 import com.test.yamoowikiproject.db.OpenPostEntity
-import com.test.yamoowikiproject.ui.chatroom.OpenChatRoomActivity
+import com.test.yamoowikiproject.ui.chatroom.OpenPostRoomActivity
 import com.test.yamoowikiproject.viewmodel.MainViewModel
 
 
@@ -42,8 +42,8 @@ class HomeFragment : Fragment() {
         )
 
         fragmentHomeBinding.recyclerView.adapter = HomeRecyclerViewAdapter(openChatList = list) {
-            val intent = Intent(context, OpenChatRoomActivity::class.java).apply {
-                putExtra("OpenChatRoomActivity", 10)
+            val intent = Intent(context, OpenPostRoomActivity::class.java).apply {
+                putExtra("OpenPostRoomActivity", 10)
             }
             startActivity(intent)
         }

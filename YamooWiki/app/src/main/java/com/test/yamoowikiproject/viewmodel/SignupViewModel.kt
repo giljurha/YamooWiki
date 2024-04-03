@@ -12,7 +12,9 @@ class SignupViewModel : ViewModel() {
 
     fun signup(userEntity: UserEntity, context: Context) {
         CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
-            com.test.yamoowikiproject.db.YamooWikiDatabase.getInstance(context = context).getUserDao()
+            com.test.yamoowikiproject.db.YamooWikiDatabase
+                .getInstance(context = context)
+                .getUserDao()
                 .insertUser(userEntity = userEntity)
         }
     }
