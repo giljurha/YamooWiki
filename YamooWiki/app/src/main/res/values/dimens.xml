@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="imgSize">150dp</dimen>
+    <style name="circular">
+        <item name="cornerSize">10%</item>
+    </style>
 </resources>

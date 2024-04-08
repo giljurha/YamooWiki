@@ -2,15 +2,15 @@ package com.test.yamoowikiproject.ui.chatroom
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.test.yamoowikiproject.databinding.ActivityOpenChatRoomBinding
+import com.test.yamoowikiproject.databinding.ActivityOpenPostRoomBinding
 
 
 class OpenPostRoomActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityOpenChatRoomBinding
+    private lateinit var binding: ActivityOpenPostRoomBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityOpenChatRoomBinding.inflate(layoutInflater)
+        binding = ActivityOpenPostRoomBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         /* TODO:  */
