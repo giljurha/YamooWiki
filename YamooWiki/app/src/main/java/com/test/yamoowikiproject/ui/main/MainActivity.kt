@@ -18,32 +18,32 @@ import com.test.yamoowikiproject.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var activityMainbinding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        activityMainbinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(activityMainbinding.root)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         /* TODO: preference 값 체크 후 로그인 수행 */
         replaceFragment(fragmentType = FragmentType.LOGIN, addToBackStack = false, bundle = null)
 
         mainViewModel.isVisibleBottomNavigationView.observe(this) {
             if (it == false) {
-                activityMainbinding.bottomNavigationView.visibility = View.GONE
+                binding.bottomNavigationView.visibility = View.GONE
             } else {
-                activityMainbinding.bottomNavigationView.visibility = View.VISIBLE
+                binding.bottomNavigationView.visibility = View.VISIBLE
             }
         }
 
         mainViewModel.fragmentDestination.observe(this) {
-            replaceFragment(fragmentType = it, addToBackStack = false, bundle = null)
+            replaceFragment(fragmentType = it, addToBackStack = true, bundle = null)
         }
 
 
-        activityMainbinding.run {
+        binding.run {
             bottomNavigationView.setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.home -> {
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         newFragment.arguments = bundle
-        fragmentTransaction.replace(R.id.mainContainer, newFragment)
+        fragmentTransaction.replace(R.id.main_container, newFragment)
         if (addToBackStack) fragmentTransaction.addToBackStack(fragmentType.name)
         fragmentTransaction.commit()
     }

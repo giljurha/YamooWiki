@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,14 +53,20 @@ class SignupFragment : Fragment() {
             selectGallery()
         }
 
+        binding.toolbar.setNavigationOnClickListener {
+            Log.d("백버튼","백버튼")
+            parentFragmentManager.popBackStack()
+
+        }
+
     }
 
     private fun confirm(): UserEntity? {
         with(binding) {
             val userId: String = etUserId.text.toString()
-            val userNickName: String = userNickNameInput.text.toString()
-            val userPassword: String = userPasswordInput.text.toString()
-            val userPasswordCheck: String = userPasswordInputCheck.text.toString()
+            val userNickName: String = etUserNickName.text.toString()
+            val userPassword: String = etUserPassword.text.toString()
+            val userPasswordCheck: String = etUserPasswordCheck.text.toString()
 
 
             val errorState: SignupErrorState = when {
@@ -98,8 +105,8 @@ class SignupFragment : Fragment() {
             setPositiveButton("확인") { dialog, which ->
                 when (errorState) {
                     SignupErrorState.ID -> binding.etUserId.requestFocus()
-                    SignupErrorState.NICKNAME -> binding.userNickNameInput.requestFocus()
-                    SignupErrorState.PASSWORD -> binding.userPasswordInput.requestFocus()
+                    SignupErrorState.NICKNAME -> binding.etUserNickName.requestFocus()
+                    SignupErrorState.PASSWORD -> binding.etUserPassword.requestFocus()
                     SignupErrorState.PROFILE -> binding.userProfileImage.requestFocus()
                     SignupErrorState.NONE -> Unit
                 }
