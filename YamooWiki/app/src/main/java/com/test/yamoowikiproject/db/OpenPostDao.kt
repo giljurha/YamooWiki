@@ -14,5 +14,5 @@ interface OpenPostDao {
     fun deleteOpenPost(openChat: OpenPostEntity)
 
     @Query("SELECT * FROM OpenPostEntity WHERE OpenPostName = :openPostName LIMIT 1")
-    fun getOpenChat(openPostName: String): List<OpenPostEntity>
+    fun getOpenPost(openPostName: String): List<OpenPostEntity>
 }

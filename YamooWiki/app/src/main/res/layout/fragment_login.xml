@@ -9,33 +9,33 @@
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
-        android:id="@+id/appName"
+        android:id="@+id/tv_app_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         android:text="@string/app_name"
         android:textSize="35sp"
-        app:layout_constraintBottom_toTopOf="@+id/idLayout"
+        app:layout_constraintBottom_toTopOf="@+id/et_id_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/idLayout"
+        android:id="@+id/et_id_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         app:boxBackgroundMode="outline"
         app:endIconMode="clear_text"
-        app:layout_constraintBottom_toTopOf="@id/passwordLayout"
+        app:layout_constraintBottom_toTopOf="@id/et_password_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appName"
+        app:layout_constraintTop_toBottomOf="@id/tv_app_title"
         app:layout_constraintVertical_chainStyle="packed">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/idInput"
+            android:id="@+id/et_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="아이디"
@@ -44,7 +44,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordLayout"
+        android:id="@+id/et_password_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
@@ -54,13 +54,13 @@
         app:counterEnabled="true"
         app:counterMaxLength="20"
         app:endIconMode="password_toggle"
-        app:layout_constraintBottom_toTopOf="@id/loginButton"
+        app:layout_constraintBottom_toTopOf="@id/btn_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/idLayout">
+        app:layout_constraintTop_toBottomOf="@id/et_id_layout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/passwordInput"
+            android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="비밀번호"
@@ -68,7 +68,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/btn_login"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -76,32 +76,32 @@
         android:text="로그인"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordLayout"
-        app:layout_constraintBottom_toTopOf="@id/messageText"/>
+        app:layout_constraintTop_toBottomOf="@+id/et_password_layout"
+        app:layout_constraintBottom_toTopOf="@id/tv_signup_message"/>
 
     <TextView
-        android:id="@+id/messageText"
+        android:id="@+id/tv_signup_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="15dp"
         android:text="아직 회원이 아니신가요?"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/signupText"
+        app:layout_constraintEnd_toStartOf="@id/tv_signup"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loginButton" />
+        app:layout_constraintTop_toBottomOf="@id/btn_login" />
 
     <TextView
-        android:id="@+id/signupText"
+        android:id="@+id/tv_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="회원가입"
         android:textColor="#2196F3"
         android:padding="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/messageText"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_signup_message"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/messageText"
-        app:layout_constraintTop_toTopOf="@id/messageText" />
+        app:layout_constraintStart_toEndOf="@id/tv_signup_message"
+        app:layout_constraintTop_toTopOf="@id/tv_signup_message" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

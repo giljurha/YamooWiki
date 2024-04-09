@@ -15,7 +15,7 @@ import com.test.yamoowikiproject.viewmodel.MainViewModel
 
 
 class LoginFragment : Fragment() {
-    lateinit var fragmentLoginBinding: FragmentLoginBinding
+    lateinit var binding: FragmentLoginBinding
     private val mainViewModel: MainViewModel by activityViewModels()
     private val loginViewModel: LoginViewModel by viewModels()
 
@@ -24,8 +24,8 @@ class LoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        fragmentLoginBinding = FragmentLoginBinding.inflate(inflater)
-        return fragmentLoginBinding.root
+        binding = FragmentLoginBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,17 +38,17 @@ class LoginFragment : Fragment() {
             }
         }
 
-        fragmentLoginBinding.run {
-            loginButton.setOnClickListener {
-                val id = fragmentLoginBinding.idInput.text.toString()
-                val password = fragmentLoginBinding.passwordInput.text.toString()
+        binding.run {
+            btnLogin.setOnClickListener {
+                val id = binding.etId.text.toString()
+                val password = binding.etPassword.text.toString()
                 loginViewModel.login(id, password, requireContext())
                 /* TODO: 정상적으로 로그인 되었을 때만 아래에 수행 */
                 mainViewModel.changeFragmentType(fragmentType = FragmentType.HOME)
                 mainViewModel.changeStateBottomNavigaitonView(fragmentType = FragmentType.HOME)
                 Toast.makeText(context, "회원가입이 완료되었습니다", Toast.LENGTH_SHORT).show()
             }
-            signupText.setOnClickListener {
+            tvSignup.setOnClickListener {
                 mainViewModel.changeFragmentType(fragmentType = FragmentType.SIGNUP)
             }
         }

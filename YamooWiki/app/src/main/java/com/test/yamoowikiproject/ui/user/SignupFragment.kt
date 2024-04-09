@@ -6,9 +6,11 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -32,6 +34,8 @@ class SignupFragment : Fragment() {
 
     private lateinit var database: YamooWikiDatabase
 
+    private var isValidId = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -43,23 +47,55 @@ class SignupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        observeData()
+        initViews()
+    }
+
+    private fun observeData() {
+        signupViewModel.isDuplicatedId.observe(viewLifecycleOwner) {
+            if (it) {
+                Toast.makeText(context, "가입가능", Toast.LENGTH_SHORT).show()
+                isValidId = true
+            } else {
+                Toast.makeText(context, "중복된 아이디가 있습니다", Toast.LENGTH_SHORT).show()
+                isValidId = false
+            }
+        }
+    }
+
+    private fun initViews() {
         binding.btnConfirm.setOnClickListener {
             confirm()?.let {
                 signupViewModel.signup(userEntity = it, context = requireContext())
             }
         }
+
         binding.userProfileImage.setOnClickListener {
             selectGallery()
         }
 
+        binding.toolbar.setNavigationOnClickListener {
+            Log.d("백버튼", "백버튼")
+            parentFragmentManager.popBackStack()
+        }
+
+        binding.btnIdCheck.setOnClickListener {
+            val userId: String = binding.etUserId.text.toString()
+            signupViewModel.checkId(userId = userId, context = requireContext())
+        }
+
+        binding.btnUserNickName.setOnClickListener {
+            val userNickName: String = binding.etUserNickName.text.toString()
+            signupViewModel.checkNickName(userNickName = userNickName, context = requireContext())
+        }
     }
 
     private fun confirm(): UserEntity? {
         with(binding) {
-            val userId: String = etUserId.text.toString()
-            val userNickName: String = userNickNameInput.text.toString()
-            val userPassword: String = userPasswordInput.text.toString()
-            val userPasswordCheck: String = userPasswordInputCheck.text.toString()
+            val userId: String = binding.etUserId.text.toString()
+            val userNickName: String = etUserNickName.text.toString()
+            val userPassword: String = etUserPassword.text.toString()
+            val userPasswordCheck: String = etUserPasswordCheck.text.toString()
 
 
             val errorState: SignupErrorState = when {
@@ -68,6 +104,7 @@ class SignupFragment : Fragment() {
                 userPassword.isEmpty() || userPasswordCheck.isEmpty()
                         || userPassword != userPasswordCheck ->
                     SignupErrorState.PASSWORD
+
                 uri == null -> SignupErrorState.PROFILE
 
                 else -> SignupErrorState.NONE
@@ -98,8 +135,8 @@ class SignupFragment : Fragment() {
             setPositiveButton("확인") { dialog, which ->
                 when (errorState) {
                     SignupErrorState.ID -> binding.etUserId.requestFocus()
-                    SignupErrorState.NICKNAME -> binding.userNickNameInput.requestFocus()
-                    SignupErrorState.PASSWORD -> binding.userPasswordInput.requestFocus()
+                    SignupErrorState.NICKNAME -> binding.etUserNickName.requestFocus()
+                    SignupErrorState.PASSWORD -> binding.etUserPassword.requestFocus()
                     SignupErrorState.PROFILE -> binding.userProfileImage.requestFocus()
                     SignupErrorState.NONE -> Unit
                 }
