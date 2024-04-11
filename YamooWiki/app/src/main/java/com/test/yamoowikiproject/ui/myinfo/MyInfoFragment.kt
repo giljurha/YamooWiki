@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.test.yamoowikiproject.R
 import com.test.yamoowikiproject.databinding.FragmentMyinfoBinding
 import com.test.yamoowikiproject.viewmodel.SignupViewModel
 
