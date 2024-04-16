@@ -12,20 +12,21 @@ abstract class YamooWikiDatabase : RoomDatabase() {
     abstract fun getOpenPostDao(): OpenPostDao
 
 
-
-
     companion object {
-        val databaseName = "yamooWikiDb"
+
         var yamooWikiDatabase: YamooWikiDatabase? = null
 
         fun getInstance(context: Context): YamooWikiDatabase {
             synchronized(this){
                 if (yamooWikiDatabase == null) {
-                    yamooWikiDatabase = Room.databaseBuilder(
-                        context,
-                        YamooWikiDatabase::class.java,
-                        databaseName
-                    ).fallbackToDestructiveMigration().build()
+                    yamooWikiDatabase = Room
+                        .databaseBuilder(
+                        context = context,
+                        klass = YamooWikiDatabase::class.java,
+                        name = "yamooWikiDb"
+                        )
+                        .fallbackToDestructiveMigration()
+                        .build()
                 }
             }
             return yamooWikiDatabase!!
