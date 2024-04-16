@@ -21,7 +21,10 @@ class SignupViewModel : ViewModel() {
     val isDuplicatedId: LiveData<Boolean>
         get() = _isDuplicatedId
 
-    private val checkIdJob = Job()
+    private val _isDuplicatedNickName = MutableLiveData<Boolean>()
+
+    val isDuplicatedNickName: LiveData<Boolean>
+        get() = _isDuplicatedNickName
 
     fun signup(userEntity: UserEntity, context: Context) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -36,20 +39,18 @@ class SignupViewModel : ViewModel() {
     }
 
     fun checkId(userId: String, context: Context) {
-        checkIdJob.cancel()
-        CoroutineScope(Dispatchers.IO + checkIdJob).launch {
+        CoroutineScope(Dispatchers.IO).launch {
             val userDao: UserDao = YamooWikiDatabase.getInstance(context = context).getUserDao()
-            val duplicateUser: UserEntity? = userDao.getUserById(userId = userId)
-            _isDuplicatedId.postValue(duplicateUser == null)
+            val duplicateUser: UserEntity? = userDao.getUserId(userId = userId)
+            _isDuplicatedId.postValue(duplicateUser != null)
         }
     }
 
     fun checkNickName(userNickName: String, context: Context) {
         CoroutineScope(Dispatchers.IO).launch {
             val userDao = YamooWikiDatabase.getInstance(context = context).getUserDao()
-            val existingUser = userDao.getUserByNickname(userNickName = userNickName)
-
-
+            val duplicateNickName = userDao.getUserNickname(userNickName = userNickName)
+            _isDuplicatedNickName.postValue(duplicateNickName == null)
         }
     }
 
