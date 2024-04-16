@@ -130,12 +130,13 @@
                 android:layout_height="300dp"
                 android:layout_marginTop="10dp"
                 android:adjustViewBounds="true"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_user_password_check"
+                android:src="@drawable/ic_launcher_background"
                 app:layout_constraintBottom_toTopOf="@id/btn_confirm"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_user_password_check"
                 app:shapeAppearance="@style/circular"
-                android:src="@drawable/ic_launcher_background" />
+                />
 
             <Button
                 android:id="@+id/btn_confirm"
