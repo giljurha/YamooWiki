@@ -21,11 +21,11 @@ interface UserDao {
     @Query("SELECT * FROM UserEntity WHERE userId = :userId AND userPassword = :password LIMIT 1")
     fun getUserInfo(userId: String, password: String): UserEntity?
 
-    @Query("SELECT * FROM UserEntity WHERE id = :userId")
-    fun getUserById(userId: String): UserEntity?
+    @Query("SELECT * FROM UserEntity WHERE userId = :userId")
+    fun getUserId(userId: String): UserEntity?
 
     @Query("SELECT * FROM UserEntity WHERE userNickname = :userNickName")
-    fun getUserByNickname(userNickName: String): UserEntity?
+    fun getUserNickname(userNickName: String): UserEntity?
 
 
 }
