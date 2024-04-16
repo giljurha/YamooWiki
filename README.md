@@ -7,6 +7,8 @@ Database | Room
 Asynchronous process | Coroutine
 Image rendering | Glide
 
+<br>
+
 깃 커밋 컨벤션
 커밋타입|내용
 -|-
