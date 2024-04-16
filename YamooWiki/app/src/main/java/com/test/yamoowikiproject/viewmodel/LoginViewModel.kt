@@ -30,7 +30,7 @@ class LoginViewModel : ViewModel() {
                 .getInstance(context = context)
                 .getUserDao()
 
-            val userId = userEntity.getUserById(userId = id)
+            val userId = userEntity.getUserId(userId = id)
             val userIdPassword = userEntity.getUserInfo(userId = id, password = password)
 
             if (userId != null) _isLogin.postValue(userIdPassword != null)
@@ -43,9 +43,7 @@ class LoginViewModel : ViewModel() {
             val userEntity = YamooWikiDatabase
                 .getInstance(context = context)
                 .getUserDao()
-                .getUserById(userId = id)
-
-
+                .getUserId(userId = id)
         }
     }
 }
