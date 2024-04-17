@@ -36,6 +36,8 @@ class LoginFragment : Fragment() {
         loginViewModel.isLogin.observe(viewLifecycleOwner) {
             if (it == true) {
                 mainViewModel.changeFragmentType(fragmentType = FragmentType.HOME)
+                mainViewModel.changeStateBottomNavigaitonView(fragmentType = FragmentType.HOME)
+                Toast.makeText(requireContext(),"로그인 되었습니다.",Toast.LENGTH_SHORT).show()
             }
         }
         initViews()
@@ -47,10 +49,6 @@ class LoginFragment : Fragment() {
                 val id = binding.etId.text.toString()
                 val password = binding.etPassword.text.toString()
                 loginViewModel.login(id, password, requireContext())
-                /* TODO: 정상적으로 로그인 되었을 때만 아래에 수행 */
-                mainViewModel.changeFragmentType(fragmentType = FragmentType.HOME)
-                mainViewModel.changeStateBottomNavigaitonView(fragmentType = FragmentType.HOME)
-                Toast.makeText(requireContext(),"로그인이 완료되었습니다",Toast.LENGTH_SHORT).show()
             }
             tvSignup.setOnClickListener {
                 mainViewModel.changeFragmentType(fragmentType = FragmentType.SIGNUP)

@@ -5,6 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.test.yamoowikiproject.dataclassmodel.User
+import com.test.yamoowikiproject.db.UserDao
+import com.test.yamoowikiproject.db.UserEntity
 import com.test.yamoowikiproject.db.YamooWikiDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,22 +19,17 @@ class LoginViewModel : ViewModel() {
     val isLogin: LiveData<Boolean>
         get() = _isLogin
 
-//    val user: UserEntity? by lazy {
-//
-//    }
-
-
 
     fun login(id: String, password: String, context: Context) {
-        viewModelScope
+
         CoroutineScope(Dispatchers.IO).launch {
 
-            val userEntity = YamooWikiDatabase
+            val userDao: UserDao = YamooWikiDatabase
                 .getInstance(context = context)
                 .getUserDao()
 
-            val userId = userEntity.getUserId(userId = id)
-            val userIdPassword = userEntity.getUserInfo(userId = id, password = password)
+            val userId: UserEntity? = userDao.getUserId(userId = id)
+            val userIdPassword: UserEntity? = userDao.getUserIdPassword(userId = id, password = password)
 
             if (userId != null) _isLogin.postValue(userIdPassword != null)
 
@@ -40,11 +38,10 @@ class LoginViewModel : ViewModel() {
 
     fun checkId(id: String, context: Context) {
         CoroutineScope(Dispatchers.IO).launch {
-            val userEntity = YamooWikiDatabase
+            val userEntity: UserEntity? = YamooWikiDatabase
                 .getInstance(context = context)
                 .getUserDao()
                 .getUserId(userId = id)
         }
     }
 }
-
