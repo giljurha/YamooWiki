@@ -17,14 +17,13 @@ class SignupViewModel : ViewModel() {
     /* TODO: glide에서 처리한 이미지를 db에 저장하는 값을 저장 */
 
     private val _isDuplicatedId = MutableLiveData<Boolean>()
-
     val isDuplicatedId: LiveData<Boolean>
         get() = _isDuplicatedId
 
     private val _isDuplicatedNickName = MutableLiveData<Boolean>()
-
     val isDuplicatedNickName: LiveData<Boolean>
         get() = _isDuplicatedNickName
+
 
     fun signup(userEntity: UserEntity, context: Context) {
         CoroutineScope(Dispatchers.IO).launch {

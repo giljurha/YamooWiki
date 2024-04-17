@@ -33,8 +33,6 @@ class SignupFragment : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
     private val signupViewModel: SignupViewModel by activityViewModels()
     private var uri: Uri? = null
-
-
     private var isValidId = false
     private var isValidNickName = false
 
@@ -49,11 +47,10 @@ class SignupFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         observeData()
         initViews()
     }
+
 
     private fun observeData() {
         signupViewModel.isDuplicatedId.observe(viewLifecycleOwner) {
@@ -62,50 +59,50 @@ class SignupFragment : Fragment() {
             isValidId = it.not()
         }
         signupViewModel.isDuplicatedNickName.observe(viewLifecycleOwner) {
-            if (it) {
-                Toast.makeText(context, "가입가능", Toast.LENGTH_SHORT).show()
-                isValidNickName = true
-            } else {
-                Toast.makeText(context, "중복된 닉네임이 있습니다", Toast.LENGTH_SHORT).show()
-                isValidNickName = false
-            }
+            val toastText = if (it) "중복된 닉네임이 있습니다" else "가입가능"
+            Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show()
+            isValidNickName = it.not()
         }
     }
 
-
     private fun initViews() {
+        with(binding) {
+            toolbar.setNavigationOnClickListener {
+                Log.d("백버튼", "백버튼")
+                parentFragmentManager.popBackStack()
+            }
 
-        binding.toolbar.setNavigationOnClickListener {
-            Log.d("백버튼", "백버튼")
-            parentFragmentManager.popBackStack()
-        }
+            etUserId.addTextChangedListener {
+                isValidId = false
+            }
 
-        binding.btnIdCheck.setOnClickListener {
-            val userId: String = binding.etUserId.text.toString()
-            signupViewModel.checkId(userId = userId, context = requireContext())
-        }
-        binding.etUserId.addTextChangedListener {
-            isValidId = false
-        }
+            etUserNickName.addTextChangedListener {
+                isValidNickName = false
+            }
 
-        binding.btnUserNickName.setOnClickListener {
-            val userNickName: String = binding.etUserNickName.text.toString()
-            signupViewModel.checkNickName(userNickName = userNickName, context = requireContext())
-        }
+            btnIdCheck.setOnClickListener {
+                val userId: String = binding.etUserId.text.toString()
+                signupViewModel.checkId(userId = userId, context = requireContext())
+            }
 
-        binding.userProfileImage.setOnClickListener {
-            selectGallery()
-        }
+            btnUserNickName.setOnClickListener {
+                val userNickName: String = binding.etUserNickName.text.toString()
+                signupViewModel.checkNickName(userNickName = userNickName, context = requireContext())
+            }
 
-        binding.btnConfirm.setOnClickListener {
+            userProfileImage.setOnClickListener {
+                selectGallery()
+            }
 
-            if (!isValidId) {
-                Toast.makeText(context, "아이디를 확인해주세요", Toast.LENGTH_SHORT).show()
-            } else if (!isValidNickName) {
-                Toast.makeText(context, "닉네임을 확인해주세요", Toast.LENGTH_SHORT).show()
-            } else {
-                confirm()?.let {
-                    signupViewModel.signup(userEntity = it, context = requireContext())
+            btnConfirm.setOnClickListener {
+                if (!isValidId) {
+                    Toast.makeText(context, "아이디를 확인해주세요", Toast.LENGTH_SHORT).show()
+                } else if (!isValidNickName) {
+                    Toast.makeText(context, "닉네임을 확인해주세요", Toast.LENGTH_SHORT).show()
+                } else {
+                    confirm()?.let {
+                        signupViewModel.signup(userEntity = it, context = requireContext())
+                    }
                 }
             }
         }
@@ -214,6 +211,4 @@ class SignupFragment : Fragment() {
             requestPermission()
         }
     }
-
-
 }
