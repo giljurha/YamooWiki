@@ -8,6 +8,7 @@ Asynchronous process | Coroutine
 Image rendering | Glide
 
 <br>
+<img src="![GIFMaker_me](https://github.com/giljurha/YamooWiki/assets/101917149/3b867c17-ed12-40e7-953d-50880aa26856)">
 
 깃 커밋 컨벤션
 커밋타입|내용
