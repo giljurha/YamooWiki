@@ -1,4 +1,4 @@
-구현화면
+현재 구현한 화면
 <br>
 <br>
 <img src="https://github.com/giljurha/YamooWiki/assets/101917149/3b867c17-ed12-40e7-953d-50880aa26856"/>
