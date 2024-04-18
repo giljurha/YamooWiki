@@ -1,7 +1,7 @@
 현재 구현한 화면
 <br>
 <br>
-<img src="https://github.com/giljurha/YamooWiki/assets/101917149/3b867c17-ed12-40e7-953d-50880aa26856"/>
+<img src="https://github.com/giljurha/YamooWiki/assets/101917149/a76d5adf-fd91-4e37-9117-500ea6811f0b"/>
 <br>
 <br>
 
