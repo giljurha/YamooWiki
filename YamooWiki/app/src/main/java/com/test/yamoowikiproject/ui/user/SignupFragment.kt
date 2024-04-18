@@ -6,11 +6,9 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -18,8 +16,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.test.yamoowikiproject.databinding.DialogErrorBinding
 import com.test.yamoowikiproject.databinding.FragmentSignupBinding
-import com.test.yamoowikiproject.db.YamooWikiDatabase
 import com.test.yamoowikiproject.db.UserEntity
 import com.test.yamoowikiproject.ui.main.FragmentType
 import com.test.yamoowikiproject.ui.user.model.SignupErrorState
@@ -54,13 +52,15 @@ class SignupFragment : Fragment() {
 
     private fun observeData() {
         signupViewModel.isDuplicatedId.observe(viewLifecycleOwner) {
-            val toastText = if (it) "중복된 아이디가 있습니다" else "가입가능"
-            Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show()
+            val signupErrorState =
+                if (it) SignupErrorState.DUPLICATEDID else SignupErrorState.NOTERROR
+            showDialog(signupErrorState)
             isValidId = it.not()
         }
         signupViewModel.isDuplicatedNickName.observe(viewLifecycleOwner) {
-            val toastText = if (it) "중복된 닉네임이 있습니다" else "가입가능"
-            Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show()
+            val signupErrorState: SignupErrorState =
+                if (it) SignupErrorState.DUPLICATEDNICKNAME else SignupErrorState.NOTERROR
+            showDialog(signupErrorState)
             isValidNickName = it.not()
         }
     }
@@ -68,7 +68,6 @@ class SignupFragment : Fragment() {
     private fun initViews() {
         with(binding) {
             toolbar.setNavigationOnClickListener {
-                Log.d("백버튼", "백버튼")
                 parentFragmentManager.popBackStack()
             }
 
@@ -82,12 +81,26 @@ class SignupFragment : Fragment() {
 
             btnIdCheck.setOnClickListener {
                 val userId: String = binding.etUserId.text.toString()
-                signupViewModel.checkId(userId = userId, context = requireContext())
+                if (userId.isEmpty()) {
+                    showDialog(signupErrorState = SignupErrorState.ID)
+                } else {
+                    signupViewModel.checkId(
+                        userId = userId,
+                        context = requireContext()
+                    )
+                }
             }
 
             btnUserNickName.setOnClickListener {
                 val userNickName: String = binding.etUserNickName.text.toString()
-                signupViewModel.checkNickName(userNickName = userNickName, context = requireContext())
+                if (userNickName.isEmpty()) {
+                    showDialog(signupErrorState = SignupErrorState.NICKNAME)
+                } else {
+                    signupViewModel.checkNickName(
+                        userNickName = userNickName,
+                        context = requireContext()
+                    )
+                }
             }
 
             userProfileImage.setOnClickListener {
@@ -95,14 +108,8 @@ class SignupFragment : Fragment() {
             }
 
             btnConfirm.setOnClickListener {
-                if (!isValidId) {
-                    Toast.makeText(context, "아이디를 확인해주세요", Toast.LENGTH_SHORT).show()
-                } else if (!isValidNickName) {
-                    Toast.makeText(context, "닉네임을 확인해주세요", Toast.LENGTH_SHORT).show()
-                } else {
-                    confirm()?.let {
-                        signupViewModel.signup(userEntity = it, context = requireContext())
-                    }
+                confirm()?.let {
+                    signupViewModel.signup(userEntity = it, context = requireContext())
                 }
             }
         }
@@ -114,50 +121,55 @@ class SignupFragment : Fragment() {
             val userNickName: String = etUserNickName.text.toString()
             val userPassword: String = etUserPassword.text.toString()
             val userPasswordCheck: String = etUserPasswordCheck.text.toString()
+            val isUserPasswordCheck: Boolean = userPassword.isEmpty().not()
+                    && userPasswordCheck.isEmpty().not()
+                    && userPassword == userPasswordCheck
 
-
-            val errorState: SignupErrorState = when {
-                userId.isEmpty() -> SignupErrorState.ID
-                userNickName.isEmpty() -> SignupErrorState.NICKNAME
-                userPassword.isEmpty() || userPasswordCheck.isEmpty()
-                        || userPassword != userPasswordCheck ->
-                    SignupErrorState.PASSWORD
-
-                uri == null -> SignupErrorState.PROFILE
-
-                else -> SignupErrorState.NONE
-            }
-
-            if (errorState != SignupErrorState.NONE) {
-                showDialog(errorState)
+            if (!isValidId) {
+                showDialog(SignupErrorState.ID)
+                return null
+            } else if (!isValidNickName) {
+                showDialog(SignupErrorState.NICKNAME)
+                return null
+            } else if (!isUserPasswordCheck) {
+                showDialog(SignupErrorState.PASSWORD)
+                return null
+            } else if (uri == null) {
+                showDialog(SignupErrorState.PROFILE)
                 return null
             }
 
             mainViewModel.changeFragmentType(fragmentType = FragmentType.LOGIN)
 
             val user = UserEntity(
+                userId = userId,
                 userNickName = userNickName,
                 userPassword = userPassword,
-                userId = userId,
-                userImage = uri.toString()
+                userImageUri = uri.toString()
             )
             return user
         }
     }
 
 
-    private fun showDialog(errorState: SignupErrorState) {
+    private fun showDialog(signupErrorState: SignupErrorState) {
+
+        val focusView: View? = when (signupErrorState) {
+            SignupErrorState.ID -> binding.etUserId
+            SignupErrorState.NICKNAME -> binding.etUserNickName
+            SignupErrorState.PASSWORD -> binding.etUserPassword
+            SignupErrorState.PROFILE -> binding.userProfileImage
+            SignupErrorState.DUPLICATEDID -> binding.etUserId
+            SignupErrorState.DUPLICATEDNICKNAME -> binding.etUserNickName
+            SignupErrorState.NOTERROR -> null
+        }
+
         MaterialAlertDialogBuilder(requireContext()).run {
-            setTitle(errorState.title)
-            setMessage(errorState.message)
+            val dialogErrorBinding: DialogErrorBinding = DialogErrorBinding.inflate(layoutInflater)
+            dialogErrorBinding.textView.text = signupErrorState.message
+            setView(dialogErrorBinding.root)
             setPositiveButton("확인") { dialog, which ->
-                when (errorState) {
-                    SignupErrorState.ID -> binding.etUserId.requestFocus()
-                    SignupErrorState.NICKNAME -> binding.etUserNickName.requestFocus()
-                    SignupErrorState.PASSWORD -> binding.etUserPassword.requestFocus()
-                    SignupErrorState.PROFILE -> binding.userProfileImage.requestFocus()
-                    SignupErrorState.NONE -> Unit
-                }
+                focusView?.requestFocus()
             }
             setCancelable(true)
             show()
@@ -185,11 +197,6 @@ class SignupFragment : Fragment() {
         )
         imageResult.launch(intent)
     }
-
-    private fun requestPermission() {
-        permissionDialog.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-    }
-
     private val imageResult = registerForActivityResult( //oncreate에서만 정의가능 -> 모듈화 불가능
         ActivityResultContracts.StartActivityForResult()
     ) {
@@ -202,6 +209,9 @@ class SignupFragment : Fragment() {
         }
     }
 
+    private fun requestPermission() {
+        permissionDialog.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+    }
     private val permissionDialog = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) {

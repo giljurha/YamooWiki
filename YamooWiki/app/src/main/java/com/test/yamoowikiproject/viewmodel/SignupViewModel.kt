@@ -9,7 +9,6 @@ import com.test.yamoowikiproject.db.UserEntity
 import com.test.yamoowikiproject.db.YamooWikiDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 
@@ -39,18 +38,21 @@ class SignupViewModel : ViewModel() {
 
     fun checkId(userId: String, context: Context) {
         CoroutineScope(Dispatchers.IO).launch {
-            val userDao: UserDao = YamooWikiDatabase.getInstance(context = context).getUserDao()
-            val duplicateUser: UserEntity? = userDao.getUserId(userId = userId)
-            _isDuplicatedId.postValue(duplicateUser != null)
+            val existUserId: String? = YamooWikiDatabase
+                .getInstance(context = context)
+                .getUserDao()
+                .getUserId(userId = userId)
+            _isDuplicatedId.postValue(existUserId != null)
         }
     }
 
     fun checkNickName(userNickName: String, context: Context) {
         CoroutineScope(Dispatchers.IO).launch {
-            val userDao = YamooWikiDatabase.getInstance(context = context).getUserDao()
-            val duplicateNickName = userDao.getUserNickname(userNickName = userNickName)
-            _isDuplicatedNickName.postValue(duplicateNickName == null)
+            val existUserNickName: String? = YamooWikiDatabase
+                .getInstance(context = context)
+                .getUserDao()
+                .getUserNickName(userNickName = userNickName)
+            _isDuplicatedNickName.postValue(existUserNickName != null)
         }
     }
-
 }
