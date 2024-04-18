@@ -18,14 +18,14 @@ interface UserDao {
     @Delete
     fun deleteUser(userEntity: UserEntity)
 
-    @Query("SELECT * FROM UserEntity WHERE userId = :userId AND userPassword = :password LIMIT 1")
-    fun getUserIdPassword(userId: String, password: String): UserEntity?
+    @Query("SELECT * FROM UserEntity WHERE userId = :userId AND userPassword = :userPassword LIMIT 1")
+    fun getUserIdPassword(userId: String, userPassword: String): UserEntity?
 
-    @Query("SELECT * FROM UserEntity WHERE userId = :userId")
-    fun getUserId(userId: String): UserEntity?
+    @Query("SELECT userId FROM UserEntity WHERE userId = :userId")
+    fun getUserIdIfValid(userId: String): String?
 
-    @Query("SELECT * FROM UserEntity WHERE userNickname = :userNickName")
-    fun getUserNickname(userNickName: String): UserEntity?
+    @Query("SELECT userNickName FROM UserEntity WHERE userNickName = :userNickName")
+    fun getUserNickNameIfValid(userNickName: String): String?
 
 
 }
