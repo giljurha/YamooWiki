@@ -13,8 +13,6 @@ import kotlinx.coroutines.launch
 
 
 class SignupViewModel : ViewModel() {
-    /* TODO: glide에서 처리한 이미지를 db에 저장하는 값을 저장 */
-
     private val _isDuplicatedId = MutableLiveData<Boolean>()
     val isDuplicatedId: LiveData<Boolean>
         get() = _isDuplicatedId
@@ -23,12 +21,8 @@ class SignupViewModel : ViewModel() {
     val isDuplicatedNickName: LiveData<Boolean>
         get() = _isDuplicatedNickName
 
-
     fun signup(userEntity: UserEntity, context: Context) {
         CoroutineScope(Dispatchers.IO).launch {
-
-            // 중복된 id나 닉네임이 없을 경우 회원가입 진행
-//            userDao.insertUser(userEntity = userEntity)
             YamooWikiDatabase
                 .getInstance(context = context)
                 .getUserDao()

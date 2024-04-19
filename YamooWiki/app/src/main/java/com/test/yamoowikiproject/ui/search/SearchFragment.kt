@@ -24,12 +24,13 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        /* TODO: 리사이클러뷰, 레트로핏 구현예정
         val ok = mutableListOf(1,2,3,4,5,6,7,8,9)
         fragmentSearchBiding.recyclerView.adapter = SearchRecyclerViewAdapter(ok)
         val linearLayoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         val gridLayoutManager = GridLayoutManager(requireContext(),2, GridLayoutManager.VERTICAL, false)
         val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         fragmentSearchBiding.recyclerView.layoutManager = gridLayoutManager
-
+        */
     }
 }

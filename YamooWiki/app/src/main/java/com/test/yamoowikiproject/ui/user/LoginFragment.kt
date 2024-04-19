@@ -1,11 +1,11 @@
 package com.test.yamoowikiproject.ui.user
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -38,9 +38,11 @@ class LoginFragment : Fragment() {
                 mainViewModel.changeFragmentType(fragmentType = FragmentType.HOME)
                 mainViewModel.changeStateBottomNavigaitonView(fragmentType = FragmentType.HOME)
                 Toast.makeText(requireContext(),"로그인 되었습니다.",Toast.LENGTH_SHORT).show()
+
             }
         }
         initViews()
+
     }
 
     fun initViews() {
@@ -49,6 +51,11 @@ class LoginFragment : Fragment() {
                 val id = binding.etId.text.toString()
                 val password = binding.etPassword.text.toString()
                 loginViewModel.login(id, password, requireContext())
+                val currentUser = requireContext()
+                    .getSharedPreferences("currentUser", Context.MODE_PRIVATE)
+                    .edit()
+                    .putString("userId", id)
+                if (loginViewModel.isLogin.value == true) currentUser.commit()
             }
             tvSignup.setOnClickListener {
                 mainViewModel.changeFragmentType(fragmentType = FragmentType.SIGNUP)

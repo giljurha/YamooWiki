@@ -204,7 +204,8 @@ class SignupFragment : Fragment() {
             uri = it.data?.data
             Glide.with(this)
                 .load(it.data?.data)
-                .override(200, 200)
+                .override(1000, 1000)
+                .centerCrop()
                 .into(binding.userProfileImage)
         }
     }
