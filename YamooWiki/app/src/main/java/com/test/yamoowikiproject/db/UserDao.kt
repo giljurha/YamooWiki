@@ -21,6 +21,9 @@ interface UserDao {
     @Query("SELECT * FROM UserEntity WHERE userId = :userId AND userPassword = :userPassword LIMIT 1")
     fun getUserByIdPassword(userId: String, userPassword: String): UserEntity?
 
+    @Query("SELECT * FROM UserEntity WHERE userId = :userId LIMIT 1")
+    fun getUserById(userId: String): UserEntity?
+
     @Query("SELECT userId FROM UserEntity WHERE userId = :userId")
     fun getUserId(userId: String): String?
 
