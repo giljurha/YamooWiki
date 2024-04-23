@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.test.yamoowikiproject.databinding.FragmentLoginBinding
+import com.test.yamoowikiproject.db.UserEntity
 import com.test.yamoowikiproject.ui.main.FragmentType
 import com.test.yamoowikiproject.viewmodel.LoginViewModel
 import com.test.yamoowikiproject.viewmodel.MainViewModel
@@ -37,8 +38,8 @@ class LoginFragment : Fragment() {
             if (it == true) {
                 mainViewModel.changeFragmentType(fragmentType = FragmentType.HOME)
                 mainViewModel.changeStateBottomNavigaitonView(fragmentType = FragmentType.HOME)
-                Toast.makeText(requireContext(),"로그인 되었습니다.",Toast.LENGTH_SHORT).show()
-
+                loginViewModel.loginUserEntity.value?.let {
+                    saveSharedPreferences(it, requireContext()) }
             }
         }
         initViews()
@@ -61,5 +62,14 @@ class LoginFragment : Fragment() {
                 mainViewModel.changeFragmentType(fragmentType = FragmentType.SIGNUP)
             }
         }
+    }
+
+    fun saveSharedPreferences(userEntity: UserEntity, context: Context) {
+        context
+            .getSharedPreferences("loginUser", Context.MODE_PRIVATE)
+            .edit()
+            .putString("userId", userEntity.userId)
+            .putString("userImageUri", userEntity.userImageUri)
+            .commit()
     }
 }

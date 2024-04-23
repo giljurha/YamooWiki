@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.yamoowikiproject.databinding.FragmentMyinfoBinding
+import com.test.yamoowikiproject.db.UserEntity
 import com.test.yamoowikiproject.viewmodel.LoginViewModel
 import com.test.yamoowikiproject.viewmodel.MainViewModel
 import com.test.yamoowikiproject.viewmodel.SignupViewModel
@@ -17,7 +19,7 @@ import kotlin.math.sign
 
 class MyInfoFragment : Fragment() {
     lateinit var fragmentMyInfoBinding: FragmentMyinfoBinding
-    private val mainViewModel: MainViewModel by activityViewModels()
+    private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +32,10 @@ class MyInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        loginViewModel.loginUserEntity.observe(viewLifecycleOwner){
+            readSharedPreferences(it, requireContext())
+        }
+        
 /* TODO: 내정보 구현중
         val data = mutableListOf<String>("축구","농구")
         signupViewModel.signup(userEntity = confirm(), context = requireContext())
@@ -39,13 +45,20 @@ class MyInfoFragment : Fragment() {
         val isLogin2 = signupViewModel.k?.userImageUri
         mainViewModel.getCurrentUser(requireContext())
 
-    fun getCurrentUser(context: Context) {
-        val k = context
-            .getSharedPreferences("currentUser", Context.MODE_PRIVATE)
-            .getString("userId", "데이터 없음") ?: "데이터 없음"}
 
  */
 
 
+    }
+
+
+    fun readSharedPreferences(userEntity: UserEntity, context: Context) {
+        val userId: String? = context
+            .getSharedPreferences("loginUser", Context.MODE_PRIVATE)
+            .getString("userId", "")
+
+        val userImageUri: String? = context
+            .getSharedPreferences("loginUser", Context.MODE_PRIVATE)
+            .getString("userImageUri","")
     }
 }
