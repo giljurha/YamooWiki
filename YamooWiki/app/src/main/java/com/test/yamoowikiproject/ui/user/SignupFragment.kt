@@ -45,10 +45,54 @@ class SignupFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeData()
         initViews()
+        observeData()
     }
 
+    private fun initViews() {
+        with(binding) {
+            toolbar.setNavigationOnClickListener {
+                parentFragmentManager.popBackStack()
+            }
+            etUserId.addTextChangedListener {
+                isValidId = false
+            }
+
+            etUserNickName.addTextChangedListener {
+                isValidNickName = false
+            }
+            btnIdCheck.setOnClickListener {
+                val userId: String = binding.etUserId.text.toString()
+                if (userId.isEmpty()) {
+                    showDialog(signupErrorState = SignupErrorState.ID)
+                } else {
+                    signupViewModel.checkId(
+                        userId = userId,
+                        context = requireContext()
+                    )
+                }
+            }
+            btnUserNickName.setOnClickListener {
+                val userNickName: String = binding.etUserNickName.text.toString()
+                if (userNickName.isEmpty()) {
+                    showDialog(signupErrorState = SignupErrorState.NICKNAME)
+                } else {
+                    signupViewModel.checkNickName(
+                        userNickName = userNickName,
+                        context = requireContext()
+                    )
+                }
+            }
+            userProfileImage.setOnClickListener {
+                selectGallery()
+            }
+            btnConfirm.setOnClickListener {
+                confirm()?.let {
+                    signupViewModel.signup(userEntity = it, context = requireContext())
+                }
+            }
+        }
+    }
 
     private fun observeData() {
         signupViewModel.isDuplicatedId.observe(viewLifecycleOwner) {
@@ -65,54 +109,50 @@ class SignupFragment : Fragment() {
         }
     }
 
-    private fun initViews() {
-        with(binding) {
-            toolbar.setNavigationOnClickListener {
-                parentFragmentManager.popBackStack()
-            }
+    private fun selectGallery() {
+        val readPermission: Int = ContextCompat.checkSelfPermission(
+            requireContext(),
+            android.Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+        if (readPermission == PackageManager.PERMISSION_GRANTED) {
+            setImageResult()
+        } else {
+            requestPermission()
+        }
+    }
 
-            etUserId.addTextChangedListener {
-                isValidId = false
-            }
-
-            etUserNickName.addTextChangedListener {
-                isValidNickName = false
-            }
-
-            btnIdCheck.setOnClickListener {
-                val userId: String = binding.etUserId.text.toString()
-                if (userId.isEmpty()) {
-                    showDialog(signupErrorState = SignupErrorState.ID)
-                } else {
-                    signupViewModel.checkId(
-                        userId = userId,
-                        context = requireContext()
-                    )
-                }
-            }
-
-            btnUserNickName.setOnClickListener {
-                val userNickName: String = binding.etUserNickName.text.toString()
-                if (userNickName.isEmpty()) {
-                    showDialog(signupErrorState = SignupErrorState.NICKNAME)
-                } else {
-                    signupViewModel.checkNickName(
-                        userNickName = userNickName,
-                        context = requireContext()
-                    )
-                }
-            }
-
-            userProfileImage.setOnClickListener {
-                selectGallery()
-            }
-
-            btnConfirm.setOnClickListener {
-                confirm()?.let {
-                    signupViewModel.signup(userEntity = it, context = requireContext())
-                }
+    private fun setImageResult() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.setDataAndType(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            "image/*"
+        )
+        val imageResult = registerForActivityResult( //oncreate에서만 정의가능 -> 모듈화 불가능
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                uri = it.data?.data
+                Glide.with(this)
+                    .load(uri)
+                    .override(1000, 1000)
+                    .centerCrop()
+                    .into(binding.userProfileImage)
             }
         }
+        imageResult.launch(intent)
+    }
+
+    private val permissionDialog = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) {
+        if (it) {
+            setImageResult()
+        } else {
+            requestPermission()
+        }
+    }
+    private fun requestPermission() {
+        permissionDialog.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE)
     }
 
     private fun confirm(): UserEntity? {
@@ -151,7 +191,6 @@ class SignupFragment : Fragment() {
         }
     }
 
-
     private fun showDialog(signupErrorState: SignupErrorState) {
 
         val focusView: View? = when (signupErrorState) {
@@ -174,52 +213,5 @@ class SignupFragment : Fragment() {
             setCancelable(true)
             show()
         }.setCanceledOnTouchOutside(true)
-    }
-
-    private fun selectGallery() {
-        val readPermission: Int = ContextCompat.checkSelfPermission(
-            requireContext(),
-            android.Manifest.permission.READ_EXTERNAL_STORAGE
-        )
-
-        if (readPermission == PackageManager.PERMISSION_GRANTED) {
-            setImageResult()
-        } else {
-            requestPermission()
-        }
-    }
-
-    private fun setImageResult() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.setDataAndType(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            "image/*"
-        )
-        imageResult.launch(intent)
-    }
-    private val imageResult = registerForActivityResult( //oncreate에서만 정의가능 -> 모듈화 불가능
-        ActivityResultContracts.StartActivityForResult()
-    ) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            uri = it.data?.data
-            Glide.with(this)
-                .load(it.data?.data)
-                .override(1000, 1000)
-                .centerCrop()
-                .into(binding.userProfileImage)
-        }
-    }
-
-    private fun requestPermission() {
-        permissionDialog.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-    }
-    private val permissionDialog = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) {
-        if (it) {
-            setImageResult()
-        } else {
-            requestPermission()
-        }
     }
 }
