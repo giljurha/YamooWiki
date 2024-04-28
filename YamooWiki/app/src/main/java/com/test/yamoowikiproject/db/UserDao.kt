@@ -10,25 +10,25 @@ import androidx.room.Update
 interface UserDao {
 
     @Insert
-    fun insertUser(userEntity: UserEntity)
+    suspend fun insertUser(userEntity: UserEntity)
 
     @Update
-    fun updateUser(userEntity: UserEntity)
+    suspend fun updateUser(userEntity: UserEntity)
 
     @Delete
-    fun deleteUser(userEntity: UserEntity)
+    suspend fun deleteUser(userEntity: UserEntity)
 
     @Query("SELECT * FROM UserEntity WHERE userId = :userId AND userPassword = :userPassword LIMIT 1")
-    fun getUserByIdPassword(userId: String, userPassword: String): UserEntity?
+    suspend fun getUserByIdPassword(userId: String, userPassword: String): UserEntity?
 
     @Query("SELECT * FROM UserEntity WHERE userId = :userId LIMIT 1")
-    fun getUserById(userId: String): UserEntity?
+    suspend fun getUserById(userId: String): UserEntity?
 
     @Query("SELECT userId FROM UserEntity WHERE userId = :userId")
-    fun getUserId(userId: String): String?
+    suspend fun getUserId(userId: String): String?
 
     @Query("SELECT userNickName FROM UserEntity WHERE userNickName = :userNickName")
-    fun getUserNickName(userNickName: String): String?
+    suspend fun getUserNickName(userNickName: String): String?
 
 
 }
