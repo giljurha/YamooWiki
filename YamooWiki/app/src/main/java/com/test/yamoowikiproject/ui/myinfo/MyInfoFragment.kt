@@ -6,27 +6,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.test.yamoowikiproject.databinding.FragmentMyinfoBinding
 import com.test.yamoowikiproject.db.UserEntity
 import com.test.yamoowikiproject.viewmodel.LoginViewModel
-import com.test.yamoowikiproject.viewmodel.MainViewModel
-import com.test.yamoowikiproject.viewmodel.SignupViewModel
-import kotlin.math.sign
 
 
 class MyInfoFragment : Fragment() {
-    lateinit var fragmentMyInfoBinding: FragmentMyinfoBinding
+    private lateinit var binding: FragmentMyinfoBinding
     private val loginViewModel: LoginViewModel by viewModels()
+    private var userId: String? = null
+    private var userImageUri: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        fragmentMyInfoBinding = FragmentMyinfoBinding.inflate(layoutInflater)
-        return fragmentMyInfoBinding.root
+        binding = FragmentMyinfoBinding.inflate(layoutInflater)
+        return binding.root
     }
 
 
@@ -35,7 +33,8 @@ class MyInfoFragment : Fragment() {
         loginViewModel.loginUserEntity.observe(viewLifecycleOwner){
             readSharedPreferences(it, requireContext())
         }
-        
+        setUserImage()
+
 /* TODO: 내정보 구현중
         val data = mutableListOf<String>("축구","농구")
         signupViewModel.signup(userEntity = confirm(), context = requireContext())
@@ -51,14 +50,15 @@ class MyInfoFragment : Fragment() {
 
     }
 
+    private fun setUserImage() {
+        Glide.with(this).load(userImageUri).into(binding.imageView)
+    }
+
 
     fun readSharedPreferences(userEntity: UserEntity, context: Context) {
-        val userId: String? = context
+        val sharedPreferences = context
             .getSharedPreferences("loginUser", Context.MODE_PRIVATE)
-            .getString("userId", "")
-
-        val userImageUri: String? = context
-            .getSharedPreferences("loginUser", Context.MODE_PRIVATE)
-            .getString("userImageUri","")
+        this.userId = sharedPreferences.getString("userId", "")
+        this.userImageUri = sharedPreferences.getString("userImageUri","")
     }
 }
