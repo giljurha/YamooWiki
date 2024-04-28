@@ -35,7 +35,7 @@
         app:layout_constraintVertical_chainStyle="packed">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_id"
+            android:id="@+id/et_user_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="아이디"
@@ -60,7 +60,7 @@
         app:layout_constraintTop_toBottomOf="@id/et_id_layout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_password"
+            android:id="@+id/et_user_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="비밀번호"
