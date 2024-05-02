@@ -2,15 +2,20 @@ package com.test.yamoowikiproject.ui.myinfo
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.test.yamoowikiproject.databinding.FragmentMyinfoBinding
 import com.test.yamoowikiproject.db.UserEntity
+import com.test.yamoowikiproject.retrofit.AddressService
+import com.test.yamoowikiproject.retrofit.RetrofitConnection
 import com.test.yamoowikiproject.viewmodel.LoginViewModel
+import kotlinx.coroutines.launch
 
 
 class MyInfoFragment : Fragment() {
@@ -47,7 +52,12 @@ class MyInfoFragment : Fragment() {
 
  */
 
-
+//        val addressService = RetrofitConnection.retrofit.create(AddressService::class.java)
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            addressService.getTopAddressList().list.forEach {
+//                Log.d("레트로핏","${it.value}")
+//            }
+//        }
     }
 
     private fun setUserImage() {
