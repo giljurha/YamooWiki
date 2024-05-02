@@ -13,8 +13,8 @@
 Architecture | MVVM
 Jetpack Library | Fragment, Toolbar, Livedata, Viewmodel, Viewbinding
 Database | Room
-Asynchronous process | Coroutine
 Http API | Retrofit
+Asynchronous process | Coroutine
 
 <br>
 
