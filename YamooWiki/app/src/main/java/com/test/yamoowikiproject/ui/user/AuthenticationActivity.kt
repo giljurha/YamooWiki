@@ -8,13 +8,14 @@ import androidx.fragment.app.FragmentTransaction
 import com.test.yamoowikiproject.R
 import com.test.yamoowikiproject.databinding.ActivityAuthenticationBinding
 import com.test.yamoowikiproject.ui.home.HomeFragment
+import com.test.yamoowikiproject.viewmodel.AuthenticationViewModel
 import com.test.yamoowikiproject.viewmodel.LoginViewModel
 
 
 class AuthenticationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthenticationBinding
-    private val loginViewModel: LoginViewModel by viewModels()
+    private val authenticationViewModel: AuthenticationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +24,7 @@ class AuthenticationActivity : AppCompatActivity() {
 
         replaceFragment(LoginFragmentType.HOME)
 
-        loginViewModel.loginFragment.observe(this) {
+        authenticationViewModel.loginFragment.observe(this) {
             replaceFragment(it)
         }
     }
