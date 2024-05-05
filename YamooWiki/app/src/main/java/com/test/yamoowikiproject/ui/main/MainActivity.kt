@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         newFragment.arguments = bundle
-        fragmentTransaction.replace(R.id.main_container, newFragment)
+        fragmentTransaction.replace(R.id.main_container_layout, newFragment)
         if (addToBackStack) fragmentTransaction.addToBackStack(fragmentType.name)
         fragmentTransaction.commit()
     }

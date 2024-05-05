@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.test.yamoowikiproject.dataclassmodel.User
 import com.test.yamoowikiproject.db.UserEntity
 import com.test.yamoowikiproject.db.YamooWikiDatabase
+import com.test.yamoowikiproject.ui.user.LoginFragmentType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,6 +21,10 @@ class LoginViewModel : ViewModel() {
     private val _loginUserEntity = MutableLiveData<UserEntity>()
     val loginUserEntity: LiveData<UserEntity>
         get() = _loginUserEntity
+
+    private val _loginFragment = MutableLiveData<LoginFragmentType>()
+    val loginFragment: LiveData<LoginFragmentType>
+        get() = _loginFragment
 
 
     fun login(userId: String, userPassword: String, context: Context) {
@@ -35,4 +40,9 @@ class LoginViewModel : ViewModel() {
             }
         }
     }
+
+    fun loginFragment(loginFragmentType: LoginFragmentType) {
+        _loginFragment.value = loginFragmentType
+    }
+
 }

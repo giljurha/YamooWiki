@@ -75,6 +75,7 @@ class LoginFragment : Fragment() {
                 } else {
                     loginViewModel.login(id, password, requireContext())
                 }
+                loginViewModel.login(id, password, requireContext())
             }
             tvSignup.setOnClickListener {
                 mainViewModel.changeFragmentType(fragmentType = FragmentType.SIGNUP)
