@@ -9,7 +9,6 @@ import com.test.yamoowikiproject.R
 import com.test.yamoowikiproject.databinding.ActivityAuthenticationBinding
 import com.test.yamoowikiproject.ui.home.HomeFragment
 import com.test.yamoowikiproject.viewmodel.AuthenticationViewModel
-import com.test.yamoowikiproject.viewmodel.LoginViewModel
 
 
 class AuthenticationActivity : AppCompatActivity() {
@@ -22,22 +21,21 @@ class AuthenticationActivity : AppCompatActivity() {
         binding = ActivityAuthenticationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        replaceFragment(LoginFragmentType.HOME)
+        replaceFragment(AuthenticationFragmentType.LOGIN)
 
-        authenticationViewModel.loginFragment.observe(this) {
+        authenticationViewModel.authenticationFragmentType.observe(this) {
             replaceFragment(it)
         }
     }
 
-
-
-    fun replaceFragment(loginFragmentType: LoginFragmentType) {
-        val replaceFragment: Fragment = when (loginFragmentType) {
-            LoginFragmentType.SIGNUP -> SignupFragment()
-            LoginFragmentType.HOME -> HomeFragment()
+    private fun replaceFragment(authenticationFragmentType: AuthenticationFragmentType) {
+        val fragment: Fragment = when (authenticationFragmentType) {
+            AuthenticationFragmentType.LOGIN -> LoginFragment()
+            AuthenticationFragmentType.SIGNUP -> SignupFragment()
+            AuthenticationFragmentType.HOME -> HomeFragment()
         }
         val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.login_container_layout, replaceFragment)
+        fragmentTransaction.replace(R.id.login_container_layout, fragment)
         fragmentTransaction.addToBackStack("fragment")
         fragmentTransaction.commit()
     }

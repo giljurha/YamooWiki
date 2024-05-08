@@ -27,20 +27,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /* TODO: preference 값 체크 후 로그인 수행 */
-        replaceFragment(fragmentType = FragmentType.LOGIN, addToBackStack = false, bundle = null)
-
-        mainViewModel.isVisibleBottomNavigationView.observe(this) {
-            if (it == false) {
-                binding.bottomNavigationView.visibility = View.GONE
-            } else {
-                binding.bottomNavigationView.visibility = View.VISIBLE
-            }
-        }
-
-        mainViewModel.fragmentDestination.observe(this) {
-            replaceFragment(fragmentType = it, addToBackStack = true, bundle = null)
-        }
+        replaceFragment(fragmentType = FragmentType.HOME, addToBackStack = false, bundle = null)
+//
+//        mainViewModel.isVisibleBottomNavigationView.observe(this) {
+//            if (it == false) {
+//                binding.bottomNavigationView.visibility = View.GONE
+//            } else {
+//                binding.bottomNavigationView.visibility = View.VISIBLE
+//            }
+//        }
+//
+//        mainViewModel.fragmentDestination.observe(this) {
+//            replaceFragment(fragmentType = it, addToBackStack = true, bundle = null)
+//        }
 
 
         binding.run {
@@ -80,10 +79,6 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.replace(R.id.main_container_layout, newFragment)
         if (addToBackStack) fragmentTransaction.addToBackStack(fragmentType.name)
         fragmentTransaction.commit()
-    }
-
-    fun popFragment(name: String) {
-        supportFragmentManager.popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
