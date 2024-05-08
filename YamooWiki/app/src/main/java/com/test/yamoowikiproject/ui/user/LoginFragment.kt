@@ -1,12 +1,12 @@
 package com.test.yamoowikiproject.ui.user
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -18,16 +18,18 @@ import com.test.yamoowikiproject.db.UserEntity
 import com.test.yamoowikiproject.retrofit.AddressService
 import com.test.yamoowikiproject.retrofit.RetrofitConnection
 import com.test.yamoowikiproject.ui.main.FragmentType
+import com.test.yamoowikiproject.ui.main.MainActivity
 import com.test.yamoowikiproject.ui.user.model.SignupErrorState
+import com.test.yamoowikiproject.viewmodel.AuthenticationViewModel
 import com.test.yamoowikiproject.viewmodel.LoginViewModel
 import com.test.yamoowikiproject.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
-import retrofit2.create
 
 
 class LoginFragment : Fragment() {
     lateinit var binding: FragmentLoginBinding
-    private val mainViewModel: MainViewModel by activityViewModels()
+    lateinit var intent: Intent
+    private val authenticationViewModel: AuthenticationViewModel by activityViewModels()
     private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreateView(
@@ -42,11 +44,10 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainViewModel.changeStateBottomNavigaitonView(fragmentType = FragmentType.LOGIN)
         loginViewModel.isLogin.observe(viewLifecycleOwner) {
             if (it == true) {
-                mainViewModel.changeFragmentType(fragmentType = FragmentType.HOME)
-                mainViewModel.changeStateBottomNavigaitonView(fragmentType = FragmentType.HOME)
+                intent = Intent(requireContext(), MainActivity::class.java)
+                startActivity(intent)
                 loginViewModel.loginUserEntity.value?.let {
                     saveSharedPreferences(it, requireContext())
                 }
@@ -78,7 +79,7 @@ class LoginFragment : Fragment() {
                 loginViewModel.login(id, password, requireContext())
             }
             tvSignup.setOnClickListener {
-                mainViewModel.changeFragmentType(fragmentType = FragmentType.SIGNUP)
+                authenticationViewModel.changeAuthenticationFragmentType(authenticationFragmentType = AuthenticationFragmentType.SIGNUP)
             }
         }
     }

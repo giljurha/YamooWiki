@@ -1,6 +1,7 @@
 package com.test.yamoowikiproject.ui.user
 
-enum class LoginFragmentType {
+enum class AuthenticationFragmentType {
+    LOGIN,
     SIGNUP,
     HOME
 }

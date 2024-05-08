@@ -9,6 +9,7 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -21,6 +22,7 @@ import com.test.yamoowikiproject.databinding.FragmentSignupBinding
 import com.test.yamoowikiproject.db.UserEntity
 import com.test.yamoowikiproject.ui.main.FragmentType
 import com.test.yamoowikiproject.ui.user.model.SignupErrorState
+import com.test.yamoowikiproject.viewmodel.AuthenticationViewModel
 import com.test.yamoowikiproject.viewmodel.MainViewModel
 import com.test.yamoowikiproject.viewmodel.SignupViewModel
 
@@ -28,11 +30,12 @@ import com.test.yamoowikiproject.viewmodel.SignupViewModel
 class SignupFragment : Fragment() {
 
     lateinit var binding: FragmentSignupBinding
-    private val mainViewModel: MainViewModel by activityViewModels()
+    private val AuthenticationViewModel: AuthenticationViewModel by activityViewModels()
     private val signupViewModel: SignupViewModel by activityViewModels()
     private var uri: Uri? = null
     private var isValidId = false
     private var isValidNickName = false
+    private lateinit var imageResult: ActivityResultLauncher<Intent>
 
 
     override fun onCreateView(
@@ -47,6 +50,18 @@ class SignupFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         observeData()
+        imageResult = registerForActivityResult( //oncreate에서만 정의가능 -> 모듈화 불가능
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                uri = it.data?.data
+                Glide.with(this)
+                    .load(uri)
+                    .override(1000, 1000)
+                    .centerCrop()
+                    .into(binding.userProfileImage)
+            }
+        }
     }
 
     private fun initViews() {
@@ -127,18 +142,7 @@ class SignupFragment : Fragment() {
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             "image/*"
         )
-        val imageResult = registerForActivityResult( //oncreate에서만 정의가능 -> 모듈화 불가능
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                uri = it.data?.data
-                Glide.with(this)
-                    .load(uri)
-                    .override(1000, 1000)
-                    .centerCrop()
-                    .into(binding.userProfileImage)
-            }
-        }
+
         imageResult.launch(intent)
     }
 
@@ -179,7 +183,9 @@ class SignupFragment : Fragment() {
                 return null
             }
 
-            mainViewModel.changeFragmentType(fragmentType = FragmentType.LOGIN)
+            AuthenticationViewModel.changeAuthenticationFragmentType(
+                authenticationFragmentType = AuthenticationFragmentType.LOGIN
+            )
 
             val user = UserEntity(
                 userId = userId,
