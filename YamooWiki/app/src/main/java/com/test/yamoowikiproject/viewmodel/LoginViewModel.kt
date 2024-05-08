@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.test.yamoowikiproject.db.UserEntity
 import com.test.yamoowikiproject.db.YamooWikiDatabase
-import com.test.yamoowikiproject.ui.user.LoginFragmentType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,9 +20,6 @@ class LoginViewModel : ViewModel() {
     val loginUserEntity: LiveData<UserEntity>
         get() = _loginUserEntity
 
-
-
-
     fun login(userId: String, userPassword: String, context: Context) {
         CoroutineScope(Dispatchers.IO).launch {
             val userIdPassword: UserEntity? = YamooWikiDatabase
@@ -37,6 +33,4 @@ class LoginViewModel : ViewModel() {
             }
         }
     }
-
-
 }
