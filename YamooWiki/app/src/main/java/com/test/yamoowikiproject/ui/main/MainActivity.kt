@@ -3,17 +3,14 @@ package com.test.yamoowikiproject.ui.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
-import android.view.View
 import androidx.activity.viewModels
-import androidx.fragment.app.FragmentManager
 import com.test.yamoowikiproject.R
 import com.test.yamoowikiproject.databinding.ActivityMainBinding
-import com.test.yamoowikiproject.ui.home.HomeFragment
-import com.test.yamoowikiproject.ui.myinfo.MyInfoFragment
-import com.test.yamoowikiproject.ui.search.SearchFragment
-import com.test.yamoowikiproject.ui.user.LoginFragment
-import com.test.yamoowikiproject.ui.user.SignupFragment
-import com.test.yamoowikiproject.viewmodel.MainViewModel
+import com.test.yamoowikiproject.ui.main.home.HomeFragment
+import com.test.yamoowikiproject.ui.main.myinfo.MyInfoFragment
+import com.test.yamoowikiproject.ui.main.search.SearchFragment
+import com.test.yamoowikiproject.ui.authentication.login.LoginFragment
+import com.test.yamoowikiproject.ui.authentication.signup.SignupFragment
 
 
 class MainActivity : AppCompatActivity() {

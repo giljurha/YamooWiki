@@ -1,4 +1,4 @@
-package com.test.yamoowikiproject.ui.user
+package com.test.yamoowikiproject.ui.authentication
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -7,8 +7,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.test.yamoowikiproject.R
 import com.test.yamoowikiproject.databinding.ActivityAuthenticationBinding
-import com.test.yamoowikiproject.ui.home.HomeFragment
-import com.test.yamoowikiproject.viewmodel.AuthenticationViewModel
+import com.test.yamoowikiproject.ui.authentication.login.LoginFragment
+import com.test.yamoowikiproject.ui.authentication.model.AuthenticationFragmentType
+import com.test.yamoowikiproject.ui.authentication.signup.SignupFragment
+import com.test.yamoowikiproject.ui.authentication.useraddress.UserAddressFragment
 
 
 class AuthenticationActivity : AppCompatActivity() {
@@ -32,10 +34,10 @@ class AuthenticationActivity : AppCompatActivity() {
         val fragment: Fragment = when (authenticationFragmentType) {
             AuthenticationFragmentType.LOGIN -> LoginFragment()
             AuthenticationFragmentType.SIGNUP -> SignupFragment()
-            AuthenticationFragmentType.HOME -> HomeFragment()
+            AuthenticationFragmentType.ADDRESS -> UserAddressFragment()
         }
         val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.login_container_layout, fragment)
+        fragmentTransaction.replace(R.id.authentication_container_layout, fragment)
         fragmentTransaction.addToBackStack("fragment")
         fragmentTransaction.commit()
     }

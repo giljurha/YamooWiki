@@ -1,4 +1,4 @@
-package com.test.yamoowikiproject.ui.home
+package com.test.yamoowikiproject.ui.main.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

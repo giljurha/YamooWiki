@@ -1,4 +1,4 @@
-package com.test.yamoowikiproject.ui.user.model
+package com.test.yamoowikiproject.ui.authentication.model
 
 enum class SignupErrorState(val message: String) {
     ID("아이디를 확인해주세요"),

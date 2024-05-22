@@ -1,14 +1,15 @@
-package com.test.yamoowikiproject.ui.search
+package com.test.yamoowikiproject.ui.main.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.test.yamoowikiproject.databinding.ItemSearchBinding
 
+
 class SearchViewHolder(val itemSearchBinding: ItemSearchBinding)
     : RecyclerView.ViewHolder(itemSearchBinding.root)
 
-class SearchRecyclerViewAdapter(val data: MutableList<Int>)
+class SearchViewAdapter(val data: MutableList<Int>)
     : RecyclerView.Adapter<SearchViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val itemSearchBinding: ItemSearchBinding = ItemSearchBinding.inflate(

@@ -1,17 +1,13 @@
-package com.test.yamoowikiproject.ui.home
+package com.test.yamoowikiproject.ui.main.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.yamoowikiproject.databinding.FragmentHomeBinding
-import com.test.yamoowikiproject.db.OpenPostEntity
-import com.test.yamoowikiproject.ui.chatroom.OpenPostRoomActivity
-import com.test.yamoowikiproject.viewmodel.MainViewModel
+import com.test.yamoowikiproject.ui.main.MainViewModel
 
 
 class HomeFragment : Fragment() {

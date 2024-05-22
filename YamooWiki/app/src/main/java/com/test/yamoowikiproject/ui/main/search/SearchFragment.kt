@@ -1,4 +1,4 @@
-package com.test.yamoowikiproject.ui.search
+package com.test.yamoowikiproject.ui.main.search
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

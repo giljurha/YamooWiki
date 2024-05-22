@@ -1,4 +1,4 @@
-package com.test.yamoowikiproject.viewmodel
+package com.test.yamoowikiproject.ui.authentication.login
 
 import android.content.Context
 import androidx.lifecycle.LiveData

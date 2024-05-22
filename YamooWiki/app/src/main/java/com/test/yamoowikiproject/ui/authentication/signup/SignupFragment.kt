@@ -1,4 +1,4 @@
-package com.test.yamoowikiproject.ui.user
+package com.test.yamoowikiproject.ui.authentication.signup
 
 import android.app.Activity
 import android.content.Intent
@@ -20,17 +20,15 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.test.yamoowikiproject.databinding.DialogErrorBinding
 import com.test.yamoowikiproject.databinding.FragmentSignupBinding
 import com.test.yamoowikiproject.db.UserEntity
-import com.test.yamoowikiproject.ui.main.FragmentType
-import com.test.yamoowikiproject.ui.user.model.SignupErrorState
-import com.test.yamoowikiproject.viewmodel.AuthenticationViewModel
-import com.test.yamoowikiproject.viewmodel.MainViewModel
-import com.test.yamoowikiproject.viewmodel.SignupViewModel
+import com.test.yamoowikiproject.ui.authentication.model.AuthenticationFragmentType
+import com.test.yamoowikiproject.ui.authentication.model.SignupErrorState
+import com.test.yamoowikiproject.ui.authentication.AuthenticationViewModel
 
 
 class SignupFragment : Fragment() {
 
     lateinit var binding: FragmentSignupBinding
-    private val AuthenticationViewModel: AuthenticationViewModel by activityViewModels()
+    private val authenticationViewModel: AuthenticationViewModel by activityViewModels()
     private val signupViewModel: SignupViewModel by activityViewModels()
     private var uri: Uri? = null
     private var isValidId = false
@@ -97,6 +95,9 @@ class SignupFragment : Fragment() {
                         context = requireContext()
                     )
                 }
+            }
+            tvUserAddress.setOnClickListener {
+                authenticationViewModel.changeAuthenticationFragmentType(authenticationFragmentType = AuthenticationFragmentType.ADDRESS)
             }
             userProfileImage.setOnClickListener {
                 selectGallery()
@@ -183,7 +184,7 @@ class SignupFragment : Fragment() {
                 return null
             }
 
-            AuthenticationViewModel.changeAuthenticationFragmentType(
+            authenticationViewModel.changeAuthenticationFragmentType(
                 authenticationFragmentType = AuthenticationFragmentType.LOGIN
             )
 
