@@ -1,11 +1,3 @@
-현재 구현한 화면
-<br>
-<br>
-<img src="https://github.com/giljurha/YamooWiki/assets/101917149/5e1dbe5e-2b55-4b11-8f62-cddc22bd229c"/>
-<img src="https://github.com/giljurha/YamooWiki/assets/101917149/0902de2b-866e-4fbd-bc72-a25eb35951f0"/>
-<img src="https://github.com/giljurha/YamooWiki/assets/101917149/4b3fb02b-636f-4d1f-8eef-80924d1c7bc5"/>
-<br>
-<br>
 
 사용기술
 분류|이름
